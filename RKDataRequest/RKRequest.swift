@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import Foundation
 
 public protocol RKRequestable {
     //
@@ -33,8 +32,6 @@ public protocol RKRequestable {
 
 open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
-    public typealias RKResponse = Alamofire.DataResponse<ResponseType>
-
     public typealias RKResult = Alamofire.Result<ResultType>
 
     public typealias RKCompletionHandler = (RKResult) -> Void
@@ -51,8 +48,6 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
     open var request: Alamofire.Request?
     
-    open var dataResponse: RKResponse?
-
     open var requestQueue: RKRequestQueueType?
 
     open var completionHandler: RKCompletionHandler?
@@ -88,12 +83,13 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
          ResponseType can be JSON, String, NSData, SwiftyJSON and so on.
      */
     func parseDataResponse() {
+        //
     }
     
     /*
          Parse response to the final ResultType or generate a error
      */
-    func parseResult(_ response: RKResponse) -> RKResult {
+    func parseResult() -> RKResult {
         //
         return RKResult.failure(RKError.IncorrectRequestTypeError)
     }
@@ -105,7 +101,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         //
         DispatchQueue.global(qos: .default).async {
             //
-            let result: RKResult = (self.dataResponse != nil) ? self.parseResult(self.dataResponse!) : RKResult.failure(RKError.EmptyResponseError)
+            let result = self.parseResult()
             //
             DispatchQueue.main.async {
                 //
@@ -116,49 +112,6 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         }
     }
 }
-
-open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
-    
-    var dataRequest: Alamofire.DataRequest? {
-        return request as? Alamofire.DataRequest
-    }
-    
-    override open func prepare(_ requestQueue: RKRequestQueueType) {
-        //
-        super.prepare(requestQueue)
-        //
-        request = requestQueue.sessionManager.request(url,
-                                                      method: method,
-                                                      parameters: parameters,
-                                                      encoding: encoding,
-                                                      headers: headers)
-    }
-}
-
-open class RKUploadRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
-    
-    var uploadRequest: Alamofire.UploadRequest? {
-        return request as? Alamofire.UploadRequest
-    }
-    
-    override open func prepare(_ requestQueue: RKRequestQueueType) {
-        //
-        super.prepare(requestQueue)
-    }
-}
-
-open class RKDownloadRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
-    
-    var downloadRequest: Alamofire.DownloadRequest? {
-        return request as? Alamofire.DownloadRequest
-    }
-    
-    override open func prepare(_ requestQueue: RKRequestQueueType) {
-        //
-        super.prepare(requestQueue)
-    }
-}
-
 
 extension RKRequest: CustomStringConvertible {
     

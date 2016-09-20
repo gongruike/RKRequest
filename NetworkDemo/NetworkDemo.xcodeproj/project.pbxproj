@@ -20,6 +20,9 @@
 		9FC942631D8EA24700741190 /* RKConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC942621D8EA24700741190 /* RKConfiguration.swift */; };
 		9FFC3D6B1D911F86009B2A94 /* RKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC3D6A1D911F86009B2A94 /* RKError.swift */; };
 		9FFC3D6D1D912405009B2A94 /* RKTypeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC3D6C1D912405009B2A94 /* RKTypeRequest.swift */; };
+		9FFC3D721D913A96009B2A94 /* RKDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC3D711D913A96009B2A94 /* RKDataRequest.swift */; };
+		9FFC3D741D913AA2009B2A94 /* RKUploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC3D731D913AA2009B2A94 /* RKUploadRequest.swift */; };
+		9FFC3D761D913AAE009B2A94 /* RKDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC3D751D913AAE009B2A94 /* RKDownloadRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		9FC942621D8EA24700741190 /* RKConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKConfiguration.swift; sourceTree = "<group>"; };
 		9FFC3D6A1D911F86009B2A94 /* RKError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKError.swift; sourceTree = "<group>"; };
 		9FFC3D6C1D912405009B2A94 /* RKTypeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKTypeRequest.swift; sourceTree = "<group>"; };
+		9FFC3D711D913A96009B2A94 /* RKDataRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKDataRequest.swift; sourceTree = "<group>"; };
+		9FFC3D731D913AA2009B2A94 /* RKUploadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKUploadRequest.swift; sourceTree = "<group>"; };
+		9FFC3D751D913AAE009B2A94 /* RKDownloadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKDownloadRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,9 @@
 			children = (
 				9FFC3D6A1D911F86009B2A94 /* RKError.swift */,
 				9FC9425B1D8EA12A00741190 /* RKRequest.swift */,
+				9FFC3D711D913A96009B2A94 /* RKDataRequest.swift */,
+				9FFC3D731D913AA2009B2A94 /* RKUploadRequest.swift */,
+				9FFC3D751D913AAE009B2A94 /* RKDownloadRequest.swift */,
 				9FA6ECF21D9109740091A2A9 /* RKRequestQueue.swift */,
 				9FC942621D8EA24700741190 /* RKConfiguration.swift */,
 				9FFC3D6C1D912405009B2A94 /* RKTypeRequest.swift */,
@@ -289,10 +298,13 @@
 			files = (
 				9FC9422F1D8EA0E000741190 /* ViewController.swift in Sources */,
 				9FC942631D8EA24700741190 /* RKConfiguration.swift in Sources */,
+				9FFC3D741D913AA2009B2A94 /* RKUploadRequest.swift in Sources */,
 				9FA6ECF31D9109740091A2A9 /* RKRequestQueue.swift in Sources */,
 				9FC9422D1D8EA0E000741190 /* AppDelegate.swift in Sources */,
 				9FC9425C1D8EA12A00741190 /* RKRequest.swift in Sources */,
+				9FFC3D761D913AAE009B2A94 /* RKDownloadRequest.swift in Sources */,
 				9FFC3D6D1D912405009B2A94 /* RKTypeRequest.swift in Sources */,
+				9FFC3D721D913A96009B2A94 /* RKDataRequest.swift in Sources */,
 				9FFC3D6B1D911F86009B2A94 /* RKError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

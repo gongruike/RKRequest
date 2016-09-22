@@ -149,14 +149,14 @@
 		9F5861A11D93B38A00351795 /* RKRequest3 */ = {
 			isa = PBXGroup;
 			children = (
-				9F5861A21D93B38A00351795 /* RKConfiguration.swift */,
-				9F5861A31D93B38A00351795 /* RKDataRequest.swift */,
-				9F5861A41D93B38A00351795 /* RKDownloadRequest.swift */,
 				9F5861A51D93B38A00351795 /* RKError.swift */,
 				9F5861A61D93B38A00351795 /* RKRequest.swift */,
-				9F5861A71D93B38A00351795 /* RKRequestQueue.swift */,
-				9F5861A81D93B38A00351795 /* RKTypeRequest.swift */,
+				9F5861A31D93B38A00351795 /* RKDataRequest.swift */,
 				9F5861A91D93B38A00351795 /* RKUploadRequest.swift */,
+				9F5861A41D93B38A00351795 /* RKDownloadRequest.swift */,
+				9F5861A71D93B38A00351795 /* RKRequestQueue.swift */,
+				9F5861A21D93B38A00351795 /* RKConfiguration.swift */,
+				9F5861A81D93B38A00351795 /* RKTypeRequest.swift */,
 			);
 			name = RKRequest3;
 			path = ../RKRequest3;

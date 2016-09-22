@@ -19,13 +19,21 @@ open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, Resu
     
     override open func prepare(_ requestQueue: RKRequestQueueType) {
         //
-        super.prepare(requestQueue)
+        self.requestQueue = requestQueue
         //
         request = requestQueue.sessionManager.request(url,
                                                       method: method,
                                                       parameters: parameters,
                                                       encoding: encoding,
                                                       headers: headers)
+    }
+    
+    open func dataProgress(queue: DispatchQueue = DispatchQueue.main, handler: @escaping RKProgressHandler) {
+        //
+        dataRequest?.downloadProgress(queue: queue, closure: { (progress) in
+            //
+            handler(progress)
+        })
     }
     
 }

@@ -30,11 +30,14 @@ public protocol RKRequestable {
     func cancel()
 }
 
+
 open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
     public typealias RKResult = Alamofire.Result<ResultType>
 
     public typealias RKCompletionHandler = (RKResult) -> Void
+    
+    public typealias RKProgressHandler = Alamofire.Request.ProgressHandler
     
     open var url: Alamofire.URLConvertible
     
@@ -58,10 +61,9 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         self.completionHandler = completionHandler
     }
     
-    // Set requestQueue & generate Request
+    // Set requestQueue & generate request
     open func prepare(_ requestQueue: RKRequestQueueType) {
-        //
-        self.requestQueue = requestQueue
+        // Overwrite by subclass
     }
     
     open func start() {
@@ -82,16 +84,16 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
          Parse the data from server into ResponseType，
          ResponseType can be JSON, String, NSData, SwiftyJSON and so on.
      */
-    func parseDataResponse() {
+    func parseResponseData() {
         //
     }
     
     /*
          Parse response to the final ResultType or generate a error
      */
-    func parseResult() -> RKResult {
+    func parseResponse() -> RKResult {
         //
-        return RKResult.failure(RKError.IncorrectRequestTypeError)
+        return RKResult.failure(RKError.incorrectRequestTypeError)
     }
     
     /*
@@ -101,7 +103,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         //
         DispatchQueue.global(qos: .default).async {
             //
-            let result = self.parseResult()
+            let result = self.parseResponse()
             //
             DispatchQueue.main.async {
                 //
@@ -111,6 +113,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
             self.requestQueue?.onFinishRequest(self)
         }
     }
+    
 }
 
 extension RKRequest: CustomStringConvertible {

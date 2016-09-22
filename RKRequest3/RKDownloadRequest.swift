@@ -19,7 +19,16 @@ open class RKDownloadRequest<ResponseType, ResultType>: RKRequest<ResponseType, 
     
     override open func prepare(_ requestQueue: RKRequestQueueType) {
         //
-        super.prepare(requestQueue)        
+        self.requestQueue = requestQueue
+        // Alamofire中的download方法也太多了，不写了
+    }
+    
+    open func downloadProgress(queue: DispatchQueue = DispatchQueue.main, handler: @escaping RKProgressHandler) {
+        //
+        downloadRequest?.downloadProgress(queue: queue, closure: { (progress) in
+            //
+            handler(progress)
+        })
     }
     
 }

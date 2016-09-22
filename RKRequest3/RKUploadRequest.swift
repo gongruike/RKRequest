@@ -11,13 +11,23 @@ import Alamofire
 
 open class RKUploadRequest<ResponseType, ResultType>: RKDataRequest<ResponseType, ResultType> {
     
-    var uploadRequest: Alamofire.UploadRequest? {
+    open var uploadRequest: Alamofire.UploadRequest? {
         return request as? Alamofire.UploadRequest
     }
     
     override open func prepare(_ requestQueue: RKRequestQueueType) {
         //
-        super.prepare(requestQueue)
+        self.requestQueue = requestQueue
+        // Alamofire中的upload方法太多了，还是不写了
+    }
+    
+    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, handler: @escaping RKProgressHandler) {
+        //
+        uploadRequest?.uploadProgress(queue: queue, closure: { (progress) in
+            //
+            handler(progress)
+        })
     }
     
 }
+

@@ -81,7 +81,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     /*
-         Parse the data from server into ResponseType，
+         Parse data from server into ResponseType，
          ResponseType can be JSON, String, NSData, SwiftyJSON and so on.
      */
     func parseResponseData() {
@@ -89,11 +89,11 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     /*
-         Parse response to the final ResultType or generate a error
+         Parse response to the ResultType or generate a error
      */
     func parseResponse() -> RKResult {
         //
-        return RKResult.failure(RKError.incorrectRequestTypeError)
+        return RKResult.failure(RKError.incorrectRequestType)
     }
     
     /*
@@ -115,20 +115,3 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
 }
-
-extension RKRequest: CustomStringConvertible {
-    
-    public var description: String {
-        //
-        return request?.description ?? ""
-    }
-}
-
-extension RKRequest: CustomDebugStringConvertible {
-    
-    public var debugDescription: String {
-        //
-        return request?.debugDescription ?? ""
-    }
-}
-

@@ -28,12 +28,9 @@ open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, Resu
                                                       headers: headers)
     }
     
-    open func dataProgress(queue: DispatchQueue = DispatchQueue.main, handler: @escaping RKProgressHandler) {
+    open func dataProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping RKProgressHandler) {
         //
-        dataRequest?.downloadProgress(queue: queue, closure: { (progress) in
-            //
-            handler(progress)
-        })
+        dataRequest?.downloadProgress(queue: queue, closure: closure)
     }
     
 }

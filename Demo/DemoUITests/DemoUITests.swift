@@ -1,14 +1,14 @@
 //
-//  NetworkDemoUITests.swift
-//  NetworkDemoUITests
+//  DemoUITests.swift
+//  DemoUITests
 //
-//  Created by gongruike on 16/9/18.
+//  Created by gongruike on 16/9/22.
 //  Copyright © 2016年 gongruike. All rights reserved.
 //
 
 import XCTest
 
-class NetworkDemoUITests: XCTestCase {
+class DemoUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

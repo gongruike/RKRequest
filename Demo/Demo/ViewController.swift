@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  NetworkDemo
+//  Demo
 //
-//  Created by gongruike on 16/9/18.
+//  Created by gongruike on 16/9/22.
 //  Copyright © 2016年 gongruike. All rights reserved.
 //
 
@@ -13,9 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
-        
     }
 
     override func didReceiveMemoryWarning() {

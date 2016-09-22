@@ -27,10 +27,9 @@ import Alamofire
 /*
     Take advantages of Alamofire
  */
-
 open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
     
-    public func parseData() {
+    open func parseData() {
         //
         dataRequest?.responseString(completionHandler: { response -> Void in
             //
@@ -42,23 +41,9 @@ open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
     
 }
 
-//open class RKDataRequest<ResultType>: RKRequest<Data, ResultType> {
-//    
-//    public func parseData() {
-//        //
-//        dataRequest?.responseData(completionHandler: { response in
-//            //
-//            self.dataResponse = response
-//            //
-//            self.deliverResult()
-//        })
-//    }
-//
-//}
-
 open class RKJSONRequest<ResultType>: RKDataRequest<Any, ResultType> {
     
-    public func parseData() {
+    open func parseData() {
         //
         dataRequest?.responseJSON(completionHandler: { response -> Void in
             //

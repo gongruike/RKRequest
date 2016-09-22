@@ -10,17 +10,20 @@ import UIKit
 
 
 public enum RKError: Error {
-    case incorrectRequestTypeError
-    case emptyResponseError
+    case nilRequest
+    case incorrectRequestType
+    case emptyResponse
 }
 
 extension RKError: LocalizedError {
     //
     public var errorDescription: String? {
         switch self {
-        case .incorrectRequestTypeError:
+        case .nilRequest:
+            return ""
+        case .incorrectRequestType:
             return "Incorrect request type, please use a valid request type"
-        case .emptyResponseError:
+        case .emptyResponse:
             return "Empty response"
         }
     }

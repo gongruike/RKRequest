@@ -21,12 +21,9 @@ open class RKUploadRequest<ResponseType, ResultType>: RKDataRequest<ResponseType
         // Alamofire中的upload方法太多了，还是不写了
     }
     
-    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, handler: @escaping RKProgressHandler) {
+    open func uploadProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping RKProgressHandler) {
         //
-        uploadRequest?.uploadProgress(queue: queue, closure: { (progress) in
-            //
-            handler(progress)
-        })
+        uploadRequest?.uploadProgress(queue: queue, closure: closure)
     }
     
 }

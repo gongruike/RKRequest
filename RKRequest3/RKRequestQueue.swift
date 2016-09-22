@@ -60,16 +60,14 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
 
-    open func startRequest(_ request: RKRequestable) {
+    private func startRequest(_ request: RKRequestable) {
         //
         request.prepare(self)
         //
         request.start()
-        //
-        self.activeRequestCount += 1
     }
     
-    open func startNextRequest() {
+    private func startNextRequest() {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
         //
@@ -106,12 +104,11 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     public func onSendRequest(_ request: RKRequestable) {
-        
+        self.activeRequestCount += 1
     }
     
     public func onFinishRequest(_ request: RKRequestable) {
-        
+        self.activeRequestCount -= 1
     }
     
 }
-

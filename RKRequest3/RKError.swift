@@ -24,8 +24,11 @@
 import UIKit
 
 public enum RKError: Error {
+    //
     case nilRequest
+    //
     case incorrectRequestType
+    //
     case emptyResponse
 }
 

@@ -35,11 +35,13 @@ open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, Resu
         //
         self.requestQueue = requestQueue
         //
-        request = requestQueue.sessionManager.request(url,
-                                                      method: method,
-                                                      parameters: parameters,
-                                                      encoding: encoding,
-                                                      headers: headers)
+        request = requestQueue.sessionManager.request(
+            url,
+            method: method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: headers
+        )
     }
     
     open func dataProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping RKProgressHandler) {

@@ -46,7 +46,7 @@ open class RKRequestQueue: RKRequestQueueType {
     open var queuedRequests: [RKRequestable] = []
     //
     let synchronizationQueue: DispatchQueue = {
-        let name = String(format: "cn.rk.data.request.synchronization.queue-%08%08", arc4random(), arc4random())
+        let name = String(format: "cn.rk.request.synchronization.queue-%08%08", arc4random(), arc4random())
         return DispatchQueue(label: name)
     }()
     

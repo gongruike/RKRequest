@@ -23,7 +23,7 @@
 import UIKit
 import Alamofire
 
-open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
+open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResultType> {
     
     var dataRequest: Alamofire.DataRequest? {
         return request as? Alamofire.DataRequest

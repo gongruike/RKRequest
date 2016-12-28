@@ -45,11 +45,9 @@ public protocol RKRequestable {
 }
 
 
-open class RKRequest<ResponseType, ResultType>: RKRequestable {
+open class RKRequest<ResultType>: RKRequestable {
 
-    public typealias RKResult = Alamofire.Result<ResultType>
-
-    public typealias RKCompletionHandler = (RKResult) -> Void
+    public typealias RKCompletionHandler = (Alamofire.Result<ResultType>) -> Void
     
     public typealias RKProgressHandler = Alamofire.Request.ProgressHandler
     
@@ -84,6 +82,8 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         //
         request?.resume()
         //
+        parseResponseData()
+        //
         requestQueue?.onSendRequest(self)
     }
     
@@ -105,9 +105,9 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     /*
          Parse response to the ResultType or generate a error
      */
-    func parseResponse() -> RKResult {
+    func parseResponse() -> Alamofire.Result<ResultType> {
         //
-        return RKResult.failure(RKError.incorrectRequestType)
+        return Alamofire.Result.failure(RKError.incorrectRequestType)
     }
     
     /*

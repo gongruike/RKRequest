@@ -43,6 +43,10 @@ open class RKRequestQueue: RKRequestQueueType {
     //
     open var activeRequestCount: Int = 0
     //
+    private var lock: NSLock = NSLock()
+    //
+    private var isReady: Bool = true
+    //
     open var queuedRequests: [RKRequestable] = []
     //
     let synchronizationQueue: DispatchQueue = {
@@ -75,14 +79,14 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
 
-    private func startRequest(_ request: RKRequestable) {
+    func startRequest(_ request: RKRequestable) {
         //
         request.prepare(self)
         //
         request.start()
     }
     
-    private func startNextRequest() {
+    func startNextRequest() {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
         //
@@ -92,7 +96,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    private func enqueueRequest(_ request: RKRequestable) {
+    func enqueueRequest(_ request: RKRequestable) {
         //
         switch configuration.prioritization {
         case .fifo:
@@ -102,7 +106,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    private func dequeueRequest() -> RKRequestable? {
+    func dequeueRequest() -> RKRequestable? {
         //
         var request: RKRequestable?
         //
@@ -113,17 +117,21 @@ open class RKRequestQueue: RKRequestQueueType {
         return request
     }
     
-    private func isActiveRequestCountBelowMaximumLimit() -> Bool {
+    func isActiveRequestCountBelowMaximumLimit() -> Bool {
         //
         return activeRequestCount < configuration.maximumActiveRequestCount
     }
     
-    public func onSendRequest(_ request: RKRequestable) {
+    open func onSendRequest(_ request: RKRequestable) {
+        lock.lock()
         self.activeRequestCount += 1
+        lock.unlock()
     }
     
-    public func onFinishRequest(_ request: RKRequestable) {
+    open func onFinishRequest(_ request: RKRequestable) {
+        lock.lock()
         self.activeRequestCount -= 1
+        lock.unlock()
     }
     
 }

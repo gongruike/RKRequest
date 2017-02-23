@@ -40,13 +40,13 @@ open class RKConfiguration {
     //
     open let configuration: URLSessionConfiguration
     //
-    open let trustPolicyManager: Alamofire.ServerTrustPolicyManager?
+    open let trustPolicyManager: ServerTrustPolicyManager?
     
     public init(baseURL: URL?,
                 maximumActiveRequestCount: Int = 3,
                 prioritization: RKPrioritization = .fifo,
                 configuration: URLSessionConfiguration = RKConfiguration.defaultURLSessionConfiguration(),
-                trustPolicyManager: Alamofire.ServerTrustPolicyManager? = nil) {
+                trustPolicyManager: ServerTrustPolicyManager? = nil) {
         //
         self.baseURL                    = baseURL
         self.maximumActiveRequestCount  = maximumActiveRequestCount
@@ -59,7 +59,7 @@ open class RKConfiguration {
         //
         let configuration = URLSessionConfiguration.default
         
-        configuration.httpAdditionalHeaders         = Alamofire.SessionManager.defaultHTTPHeaders
+        configuration.httpAdditionalHeaders         = SessionManager.defaultHTTPHeaders
         configuration.httpShouldUsePipelining       = true
         configuration.httpShouldSetCookies          = false
         

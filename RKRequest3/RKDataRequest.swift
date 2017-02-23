@@ -25,11 +25,11 @@ import Alamofire
 
 open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResultType> {
     
-    var dataRequest: Alamofire.DataRequest? {
-        return request as? Alamofire.DataRequest
+    var dataRequest: DataRequest? {
+        return request as? DataRequest
     }
     
-    var dataResponse: Alamofire.DataResponse<ResponseType>?
+    var dataResponse: DataResponse<ResponseType>?
     
     override open func prepare(_ requestQueue: RKRequestQueueType) {
         //

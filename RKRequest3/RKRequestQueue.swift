@@ -26,7 +26,7 @@ import Alamofire
 
 public protocol RKRequestQueueType {
     //
-    var sessionManager: Alamofire.SessionManager { get }
+    var sessionManager: SessionManager { get }
     //
     var configuration: RKConfiguration { get }
     //
@@ -37,7 +37,7 @@ public protocol RKRequestQueueType {
 
 open class RKRequestQueue: RKRequestQueueType {
     //
-    open let sessionManager: Alamofire.SessionManager
+    open let sessionManager: SessionManager
     //
     open let configuration: RKConfiguration
     //
@@ -58,9 +58,9 @@ open class RKRequestQueue: RKRequestQueueType {
         //
         self.configuration = configuration
         //
-        self.sessionManager = Alamofire.SessionManager(configuration: configuration.configuration,
-                                                       delegate: Alamofire.SessionDelegate(),
-                                                       serverTrustPolicyManager: configuration.trustPolicyManager)
+        self.sessionManager = SessionManager(configuration: configuration.configuration,
+                                             delegate: SessionDelegate(),
+                                             serverTrustPolicyManager: configuration.trustPolicyManager)
         // Important
         self.sessionManager.startRequestsImmediately = false
     }

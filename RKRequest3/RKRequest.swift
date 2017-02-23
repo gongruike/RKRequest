@@ -25,17 +25,19 @@ import Alamofire
 
 public protocol RKRequestable {
     //
-    var url: Alamofire.URLConvertible { get }
+    var url: URLConvertible { get }
     //
-    var method: Alamofire.HTTPMethod { get }
+    var method: HTTPMethod { get }
     //
-    var parameters: Alamofire.Parameters { get }
+    var parameters: Parameters { get }
     //
-    var encoding: Alamofire.ParameterEncoding { get }
+    var encoding: ParameterEncoding { get }
     //
-    var headers: Alamofire.HTTPHeaders { get }
+    var headers: HTTPHeaders { get }
     //
     var requestQueue: RKRequestQueueType? { get }
+    //
+    var request: Request? { get }
     //
     func prepare(_ requestQueue: RKRequestQueueType)
     //
@@ -44,30 +46,29 @@ public protocol RKRequestable {
     func cancel()
 }
 
-
 open class RKRequest<ResultType>: RKRequestable {
 
-    public typealias RKCompletionHandler = (Alamofire.Result<ResultType>) -> Void
+    public typealias RKCompletionHandler = (Result<ResultType>) -> Void
     
-    public typealias RKProgressHandler = Alamofire.Request.ProgressHandler
+    public typealias RKProgressHandler = Request.ProgressHandler
     
-    open var url: Alamofire.URLConvertible
+    open var url: URLConvertible
     
-    open var method: Alamofire.HTTPMethod = .get
+    open var method: HTTPMethod = .get
     
-    open var parameters: Alamofire.Parameters = [:]
+    open var parameters: Parameters = [:]
     
-    open var encoding: Alamofire.ParameterEncoding = URLEncoding.default
+    open var encoding: ParameterEncoding = URLEncoding.default
     
-    open var headers: Alamofire.HTTPHeaders = [:]
+    open var headers: HTTPHeaders = [:]
 
-    open var request: Alamofire.Request?
+    open var request: Request?
     
     open var requestQueue: RKRequestQueueType?
 
     open var completionHandler: RKCompletionHandler?
 
-    init(url: Alamofire.URLConvertible, completionHandler: RKCompletionHandler?) {
+    init(url: URLConvertible, completionHandler: RKCompletionHandler?) {
         //
         self.url = url
         self.completionHandler = completionHandler
@@ -75,7 +76,7 @@ open class RKRequest<ResultType>: RKRequestable {
     
     // Set requestQueue & generate request
     open func prepare(_ requestQueue: RKRequestQueueType) {
-        // Overwrite by subclass
+        // Override by subclass
     }
     
     open func start() {
@@ -105,9 +106,9 @@ open class RKRequest<ResultType>: RKRequestable {
     /*
          Parse response to the ResultType or generate a error
      */
-    func parseResponse() -> Alamofire.Result<ResultType> {
+    func parseResponse() -> Result<ResultType> {
         //
-        return Alamofire.Result.failure(RKError.incorrectRequestType)
+        return Result.failure(RKError.incorrectRequestType)
     }
     
     /*

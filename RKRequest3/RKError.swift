@@ -25,23 +25,27 @@ import UIKit
 
 public enum RKError: Error {
     //
-    case nilRequest
+    case requestGenerationFailed
     //
     case incorrectRequestType
     //
     case emptyResponse
+    //
+//    case errorRes(code: Int, reason: String)
 }
 
 extension RKError: LocalizedError {
     //
     public var errorDescription: String? {
         switch self {
-        case .nilRequest:
-            return ""
+        case .requestGenerationFailed:
+            return "can't creat request, check the parameters"
         case .incorrectRequestType:
             return "Incorrect request type, please use a valid request type"
         case .emptyResponse:
             return "Empty response"
+//        case .errorRes(_, reason: String):
+//            return reason
         }
     }
 

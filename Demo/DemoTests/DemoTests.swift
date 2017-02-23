@@ -1,11 +1,3 @@
-//
-//  DemoTests.swift
-//  DemoTests
-//
-//  Created by gongruike on 16/9/22.
-//  Copyright © 2016年 gongruike. All rights reserved.
-//
-
 import XCTest
 @testable import Demo
 

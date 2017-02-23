@@ -19,37 +19,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-
 import Alamofire
 
-/*
-    Take advantages of Alamofire
- */
-open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
-    
-    open override func parseData() {
-        //
-        dataRequest?.responseString(completionHandler: { response -> Void in
-            //
-            self.dataResponse = response
-            //
-            self.deliverResult()
-        })
-    }
-    
+public protocol RKRequestable {
+    //
+    var url: URLConvertible { get }
+    //
+    var method: HTTPMethod { get }
+    //
+    var parameters: Parameters { get }
+    //
+    var encoding: ParameterEncoding { get }
+    //
+    var headers: HTTPHeaders { get }
+    //
+    var requestQueue: RKRequestQueueType? { get }
+    //
+    var request: Request? { get }
+    //
+    func prepare(_ requestQueue: RKRequestQueueType)
+    //
+    func start()
+    //
+    func cancel()
 }
 
-open class RKJSONRequest<ResultType>: RKDataRequest<Any, ResultType> {
-    
-    open override func parseData() {
-        //
-        dataRequest?.responseJSON(completionHandler: { response -> Void in
-            //
-            self.dataResponse = response
-            //
-            self.deliverResult()
-        })
-    }
-    
+//
+public protocol RKRequestQueueType {
+    //
+    var sessionManager: SessionManager { get }
+    //
+    var configuration: RKConfiguration { get }
+    //
+    func onSendRequest(_ request: RKRequestable)
+    //
+    func onFinishRequest(_ request: RKRequestable)
 }
+
+

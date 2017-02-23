@@ -1,11 +1,3 @@
-//
-//  DemoUITests.swift
-//  DemoUITests
-//
-//  Created by gongruike on 16/9/22.
-//  Copyright © 2016年 gongruike. All rights reserved.
-//
-
 import XCTest
 
 class DemoUITests: XCTestCase {

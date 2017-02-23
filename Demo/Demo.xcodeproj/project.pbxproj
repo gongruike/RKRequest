@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F55687A1E5EDA11002F9ECF /* RKRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5568791E5EDA11002F9ECF /* RKRequestable.swift */; };
 		9F5861741D93B36C00351795 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861731D93B36C00351795 /* AppDelegate.swift */; };
 		9F5861761D93B36C00351795 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861751D93B36C00351795 /* ViewController.swift */; };
 		9F5861791D93B36C00351795 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F5861771D93B36C00351795 /* Main.storyboard */; };
@@ -97,6 +98,7 @@
 
 /* Begin PBXFileReference section */
 		9F1148BD1E0CFD63008CB11F /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-4.2.0/Alamofire.xcodeproj"; sourceTree = "<group>"; };
+		9F5568791E5EDA11002F9ECF /* RKRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKRequestable.swift; sourceTree = "<group>"; };
 		9F5861701D93B36C00351795 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F5861731D93B36C00351795 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F5861751D93B36C00351795 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				9F5861A51D93B38A00351795 /* RKError.swift */,
 				9F5861A61D93B38A00351795 /* RKRequest.swift */,
+				9F5568791E5EDA11002F9ECF /* RKRequestable.swift */,
 				9F5861A31D93B38A00351795 /* RKDataRequest.swift */,
 				9F5861A71D93B38A00351795 /* RKRequestQueue.swift */,
 				9F5861A21D93B38A00351795 /* RKConfiguration.swift */,
@@ -424,6 +427,7 @@
 				9F5861AE1D93B38A00351795 /* RKRequest.swift in Sources */,
 				9F5861B01D93B38A00351795 /* RKTypeRequest.swift in Sources */,
 				9F5861741D93B36C00351795 /* AppDelegate.swift in Sources */,
+				9F55687A1E5EDA11002F9ECF /* RKRequestable.swift in Sources */,
 				9F5861AD1D93B38A00351795 /* RKError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

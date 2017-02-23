@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 Ruike Gong
+// Copyright (c) 2017 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,7 @@
 // SOFTWARE.
 
 
-import UIKit
 import Alamofire
-
-public protocol RKRequestQueueType {
-    //
-    var sessionManager: SessionManager { get }
-    //
-    var configuration: RKConfiguration { get }
-    //
-    func onSendRequest(_ request: RKRequestable)
-    //
-    func onFinishRequest(_ request: RKRequestable)
-}
 
 open class RKRequestQueue: RKRequestQueueType {
     //
@@ -67,7 +55,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func addRequest(_ request: RKRequestable) {
         //
-        synchronizationQueue.sync {
+        synchronizationQueue.async {
             //
             if self.isActiveRequestCountBelowMaximumLimit() {
                 //
@@ -90,10 +78,9 @@ open class RKRequestQueue: RKRequestQueueType {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
         //
-        if let request = dequeueRequest() {
-            //
-            startRequest(request)
-        }
+        guard let request = dequeueRequest() else { return }
+        //
+        startRequest(request)
     }
     
     func enqueueRequest(_ request: RKRequestable) {
@@ -123,14 +110,19 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func onSendRequest(_ request: RKRequestable) {
+        //
         lock.lock()
-        self.activeRequestCount += 1
+        activeRequestCount += 1
         lock.unlock()
     }
     
     open func onFinishRequest(_ request: RKRequestable) {
+        //
         lock.lock()
-        self.activeRequestCount -= 1
+        //
+        activeRequestCount -= 1
+        startNextRequest()
+        //
         lock.unlock()
     }
     

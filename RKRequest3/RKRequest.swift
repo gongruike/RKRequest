@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 Ruike Gong
+// Copyright (c) 2017 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,35 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
 import Alamofire
 
-public protocol RKRequestable {
-    //
-    var url: URLConvertible { get }
-    //
-    var method: HTTPMethod { get }
-    //
-    var parameters: Parameters { get }
-    //
-    var encoding: ParameterEncoding { get }
-    //
-    var headers: HTTPHeaders { get }
-    //
-    var requestQueue: RKRequestQueueType? { get }
-    //
-    var request: Request? { get }
-    //
-    func prepare(_ requestQueue: RKRequestQueueType)
-    //
-    func start()
-    //
-    func cancel()
-}
+open class RKRequest<Type>: RKRequestable {
 
-open class RKRequest<ResultType>: RKRequestable {
-
-    public typealias RKCompletionHandler = (Result<ResultType>) -> Void
+    public typealias RKCompletionHandler = (Result<Type>) -> Void
     
     public typealias RKProgressHandler = Request.ProgressHandler
     
@@ -81,16 +57,20 @@ open class RKRequest<ResultType>: RKRequestable {
     
     open func start() {
         //
-        request?.resume()
+        guard let request = request else { return }
         //
-        parseResponseData()
+        request.resume()
+        //
+        parseData()
         //
         requestQueue?.onSendRequest(self)
     }
     
     open func cancel() {
         //
-        request?.cancel()
+        guard let request = request else { return }
+        //
+        request.cancel()
         //
         deliverResult()
     }
@@ -99,14 +79,14 @@ open class RKRequest<ResultType>: RKRequestable {
          Parse data from server into ResponseType，
          ResponseType can be JSON, String, NSData, SwiftyJSON and so on.
      */
-    func parseResponseData() {
+    func parseData() {
         //
     }
     
     /*
-         Parse response to the ResultType or generate a error
+         Parse response to the Type or generate a error
      */
-    func parseResponse() -> Result<ResultType> {
+    func parseResponse() -> Result<Type> {
         //
         return Result.failure(RKError.incorrectRequestType)
     }

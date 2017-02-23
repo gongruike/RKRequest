@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  Demo
-//
-//  Created by gongruike on 16/9/22.
-//  Copyright © 2016年 gongruike. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {

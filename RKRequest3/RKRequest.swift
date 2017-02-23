@@ -50,18 +50,18 @@ open class RKRequest<Type>: RKRequestable {
         self.completionHandler = completionHandler
     }
     
-    // Set requestQueue & generate request
-    open func prepare(_ requestQueue: RKRequestQueueType) {
-        // Override by subclass
+    //
+    open func serializeRequest(in requestQueue: RKRequestQueueType) {
+        //
     }
     
     open func start() {
         //
         guard let request = request else { return }
         //
-        request.resume()
-        //
         parseData()
+        //
+        request.resume()
         //
         requestQueue?.onSendRequest(self)
     }

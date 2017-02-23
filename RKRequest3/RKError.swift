@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
+//import Foundation
 
 public enum RKError: Error {
     //
@@ -34,19 +34,19 @@ public enum RKError: Error {
 //    case errorRes(code: Int, reason: String)
 }
 
-extension RKError: LocalizedError {
-    //
-    public var errorDescription: String? {
-        switch self {
-        case .requestGenerationFailed:
-            return "can't creat request, check the parameters"
-        case .incorrectRequestType:
-            return "Incorrect request type, please use a valid request type"
-        case .emptyResponse:
-            return "Empty response"
-//        case .errorRes(_, reason: String):
-//            return reason
-        }
-    }
-
-}
+//extension RKError: LocalizedError {
+//    //
+//    public var errorDescription: String? {
+//        switch self {
+//        case .requestGenerationFailed:
+//            return "can't creat request, check the parameters"
+//        case .incorrectRequestType:
+//            return "Incorrect request type, please use a valid request type"
+//        case .emptyResponse:
+//            return "Empty response"
+////        case .errorRes(_, reason: String):
+////            return reason
+//        }
+//    }
+//
+//}

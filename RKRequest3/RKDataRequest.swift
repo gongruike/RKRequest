@@ -33,7 +33,7 @@ open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResultType> {
     
     var dataResponse: DataResponse<ResponseType>?
     
-    override open func prepare(_ requestQueue: RKRequestQueueType) {
+    override open func serializeRequest(in requestQueue: RKRequestQueueType) {
         //
         self.requestQueue = requestQueue
         //

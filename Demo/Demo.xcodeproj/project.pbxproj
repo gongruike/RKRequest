@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F55687A1E5EDA11002F9ECF /* RKRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5568791E5EDA11002F9ECF /* RKRequestable.swift */; };
+		9F5568821E5EE8A1002F9ECF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1148C91E0CFD63008CB11F /* Alamofire.framework */; };
 		9F5861741D93B36C00351795 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861731D93B36C00351795 /* AppDelegate.swift */; };
 		9F5861761D93B36C00351795 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861751D93B36C00351795 /* ViewController.swift */; };
 		9F5861791D93B36C00351795 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F5861771D93B36C00351795 /* Main.storyboard */; };
@@ -125,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F5568821E5EE8A1002F9ECF /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -573,7 +575,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

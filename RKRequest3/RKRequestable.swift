@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+
 import Alamofire
 
 public protocol RKRequestable {
@@ -37,7 +38,7 @@ public protocol RKRequestable {
     //
     var request: Request? { get }
     //
-    func prepare(_ requestQueue: RKRequestQueueType)
+    func serializeRequest(in requestQueue: RKRequestQueueType)
     //
     func start()
     //

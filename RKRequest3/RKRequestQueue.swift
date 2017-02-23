@@ -33,8 +33,6 @@ open class RKRequestQueue: RKRequestQueueType {
     //
     private var lock: NSLock = NSLock()
     //
-    private var isReady: Bool = true
-    //
     open var queuedRequests: [RKRequestable] = []
     //
     let synchronizationQueue: DispatchQueue = {
@@ -43,9 +41,9 @@ open class RKRequestQueue: RKRequestQueueType {
     }()
     
     public init(configuration: RKConfiguration) {
-        //
+        
         self.configuration = configuration
-        //
+        
         self.sessionManager = SessionManager(configuration: configuration.configuration,
                                              delegate: SessionDelegate(),
                                              serverTrustPolicyManager: configuration.trustPolicyManager)
@@ -69,7 +67,7 @@ open class RKRequestQueue: RKRequestQueueType {
 
     func startRequest(_ request: RKRequestable) {
         //
-        request.prepare(self)
+        request.serializeRequest(in: self)
         //
         request.start()
     }

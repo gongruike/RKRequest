@@ -22,9 +22,9 @@
 
 import Alamofire
 
-open class RKRequest<Type>: RKRequestable {
+open class RKRequest<Value>: RKRequestable {
 
-    public typealias RKCompletionHandler = (Result<Type>) -> Void
+    public typealias RKCompletionHandler = (Result<Value>) -> Void
     
     open var url: URLConvertible
     
@@ -42,7 +42,7 @@ open class RKRequest<Type>: RKRequestable {
 
     open var completionHandler: RKCompletionHandler?
 
-    init(url: URLConvertible, completionHandler: RKCompletionHandler?) {
+    public init(url: URLConvertible, completionHandler: RKCompletionHandler?) {
         //
         self.url = url
         self.completionHandler = completionHandler
@@ -66,7 +66,7 @@ open class RKRequest<Type>: RKRequestable {
         //
         guard let request = request else { return }
         //
-        setupDataParseHandler()
+        setupResponseDataParseHandler()
         //
         request.resume()
         //
@@ -88,21 +88,21 @@ open class RKRequest<Type>: RKRequestable {
     }
     
     //
-    open func parseResponse() -> Result<Type> {
+    open func parseResponse() -> Result<Value> {
         //
         return Result.failure(RKError.incorrectRequestType)
     }
     
     //
-    open func deliverResult(_ result: Result<Type>? = nil) {
+    open func deliverResult(_ result: Result<Value>? = nil) {
         //
-        DispatchQueue.global(qos: .default).async {
+        DispatchQueue.global(qos: .default).sync {
             //
-            let r = result ?? self.parseResponse()
+            let res = result ?? self.parseResponse()
             //
-            DispatchQueue.main.async {
+            DispatchQueue.main.sync {
                 //
-                self.completionHandler?(r)
+                self.completionHandler?(res)
             }
             //
             self.requestQueue?.onFinishRequest(self)

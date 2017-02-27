@@ -34,9 +34,9 @@ public protocol RKRequestable {
     //
     var headers: HTTPHeaders { get }
     //
-    var requestQueue: RKRequestQueueType? { get }
-    //
     var request: Request? { get }
+    //
+    var requestQueue: RKRequestQueueType? { get }
     //
     func serializeRequest(in requestQueue: RKRequestQueueType)
     //

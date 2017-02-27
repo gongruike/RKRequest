@@ -24,20 +24,19 @@
 import Alamofire
 
 open class RKRequestQueue: RKRequestQueueType {
-    //
+    
     open let sessionManager: SessionManager
-    //
+    
     open let configuration: RKConfiguration
-    //
+    
     open var activeRequestCount: Int = 0
-    //
+    
     open var delegate: RKRequestQueueDelegate?
-    //
-    private var lock: NSLock = NSLock()
-    //
+    
     open var queuedRequests: [RKRequestable] = []
-    //
+    
     let synchronizationQueue: DispatchQueue = {
+        //
         let name = String(format: "cn.rk.request.synchronization.queue-%08%08", arc4random(), arc4random())
         return DispatchQueue(label: name)
     }()
@@ -55,7 +54,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func addRequest(_ request: RKRequestable) {
         //
-        synchronizationQueue.async {
+        synchronizationQueue.sync {
             //
             if self.isActiveRequestCountBelowMaximumLimit() {
                 //
@@ -111,32 +110,28 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func onSendRequest(_ request: RKRequestable) {
         //
-//        synchronizationQueue.async { [weak self]
-//            //
-//            self?.lock.lock()
-//            self?.activeRequestCount += 1
-//            self?.lock.unlock()
-//        }
-        lock.lock()
         activeRequestCount += 1
-        lock.unlock()
+        //
+        DispatchQueue.main.sync {
+            //
+            self.delegate?.requestQueue(self, didStart: request)
+        }
     }
     
     open func onFinishRequest(_ request: RKRequestable) {
         //
-//        synchronizationQueue.async { [weak self]
-//            //
-//            self?.lock.lock()
-//            self?.activeRequestCount += 1
-//            self?.lock.unlock()
-//        }
+        synchronizationQueue.sync {
+            //
+            if self.activeRequestCount > 0 {
+                self.activeRequestCount -= 1
+            }
+            self.startNextRequest()
+        }
         //
-        lock.lock()
-        //
-        activeRequestCount -= 1
-        startNextRequest()
-        //
-        lock.unlock()
+        DispatchQueue.main.sync {
+            //
+            self.delegate?.requestQueue(self, didFinish: request)
+        }
     }
     
 }

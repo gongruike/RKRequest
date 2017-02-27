@@ -23,9 +23,9 @@
 import Alamofire
 
 public enum RKPrioritization {
-    // First in, first out.
+    //
     case fifo
-    // Last in, first out.
+    //
     case lifo
 }
 
@@ -35,9 +35,9 @@ open class RKConfiguration {
     //
     open var prioritization: RKPrioritization
     //
-    open var configuration: URLSessionConfiguration
+    open let configuration: URLSessionConfiguration
     //
-    open var trustPolicyManager: ServerTrustPolicyManager?
+    open let trustPolicyManager: ServerTrustPolicyManager?
     
     public init(maximumActiveRequestCount: Int = 3,
                 prioritization: RKPrioritization = .fifo,

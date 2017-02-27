@@ -28,28 +28,28 @@ import Alamofire
  */
 open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
     
-    open override func parseData() {
-        //
-        dataRequest?.responseString(completionHandler: { response -> Void in
-            //
-            self.dataResponse = response
-            //
-            self.deliverResult()
-        })
-    }
+//    open override func parseData() {
+//        //
+//        dataRequest?.responseString(completionHandler: { response -> Void in
+//            //
+//            self.dataResponse = response
+//            //
+//            self.deliverResult()
+//        })
+//    }
     
 }
 
 open class RKJSONRequest<ResultType>: RKDataRequest<Any, ResultType> {
     
-    open override func parseData() {
-        //
-        dataRequest?.responseJSON(completionHandler: { response -> Void in
-            //
-            self.dataResponse = response
-            //
-            self.deliverResult()
-        })
-    }
+//    open override func parseData() {
+//        //
+//        dataRequest?.responseJSON(completionHandler: { response -> Void in
+//            //
+//            self.dataResponse = response
+//            //
+//            self.deliverResult()
+//        })
+//    }
     
 }

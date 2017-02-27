@@ -31,6 +31,8 @@ open class RKRequestQueue: RKRequestQueueType {
     //
     open var activeRequestCount: Int = 0
     //
+    open var delegate: RKRequestQueueDelegate?
+    //
     private var lock: NSLock = NSLock()
     //
     open var queuedRequests: [RKRequestable] = []
@@ -65,14 +67,14 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
 
-    func startRequest(_ request: RKRequestable) {
+    private func startRequest(_ request: RKRequestable) {
         //
         request.serializeRequest(in: self)
         //
         request.start()
     }
     
-    func startNextRequest() {
+    private func startNextRequest() {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
         //
@@ -81,7 +83,7 @@ open class RKRequestQueue: RKRequestQueueType {
         startRequest(request)
     }
     
-    func enqueueRequest(_ request: RKRequestable) {
+    private func enqueueRequest(_ request: RKRequestable) {
         //
         switch configuration.prioritization {
         case .fifo:
@@ -91,7 +93,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    func dequeueRequest() -> RKRequestable? {
+    private func dequeueRequest() -> RKRequestable? {
         //
         var request: RKRequestable?
         //
@@ -102,19 +104,32 @@ open class RKRequestQueue: RKRequestQueueType {
         return request
     }
     
-    func isActiveRequestCountBelowMaximumLimit() -> Bool {
+    private func isActiveRequestCountBelowMaximumLimit() -> Bool {
         //
         return activeRequestCount < configuration.maximumActiveRequestCount
     }
     
     open func onSendRequest(_ request: RKRequestable) {
         //
+//        synchronizationQueue.async { [weak self]
+//            //
+//            self?.lock.lock()
+//            self?.activeRequestCount += 1
+//            self?.lock.unlock()
+//        }
         lock.lock()
         activeRequestCount += 1
         lock.unlock()
     }
     
     open func onFinishRequest(_ request: RKRequestable) {
+        //
+//        synchronizationQueue.async { [weak self]
+//            //
+//            self?.lock.lock()
+//            self?.activeRequestCount += 1
+//            self?.lock.unlock()
+//        }
         //
         lock.lock()
         //

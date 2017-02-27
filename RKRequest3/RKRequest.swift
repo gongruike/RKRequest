@@ -26,8 +26,6 @@ open class RKRequest<Type>: RKRequestable {
 
     public typealias RKCompletionHandler = (Result<Type>) -> Void
     
-    public typealias RKProgressHandler = Request.ProgressHandler
-    
     open var url: URLConvertible
     
     open var method: HTTPMethod = .get
@@ -53,13 +51,22 @@ open class RKRequest<Type>: RKRequestable {
     //
     open func serializeRequest(in requestQueue: RKRequestQueueType) {
         //
+        self.requestQueue = requestQueue
+        //
+        self.request = requestQueue.sessionManager.request(
+            url,
+            method: method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: headers
+        )
     }
     
     open func start() {
         //
         guard let request = request else { return }
         //
-        parseData()
+        setupDataParseHandler()
         //
         request.resume()
         //
@@ -72,37 +79,30 @@ open class RKRequest<Type>: RKRequestable {
         //
         request.cancel()
         //
-        deliverResult()
+        deliverResult(Result.failure(RKError.incorrectRequestType))
     }
     
-    /*
-         Parse data from server into ResponseType，
-         ResponseType can be JSON, String, NSData, SwiftyJSON and so on.
-     */
-    func parseData() {
+    //
+    open func setupResponseDataParseHandler() {
         //
     }
     
-    /*
-         Parse response to the Type or generate a error
-     */
-    func parseResponse() -> Result<Type> {
+    //
+    open func parseResponse() -> Result<Type> {
         //
         return Result.failure(RKError.incorrectRequestType)
     }
     
-    /*
-         Deliver result or error in the main thread
-     */
-    func deliverResult() {
+    //
+    open func deliverResult(_ result: Result<Type>? = nil) {
         //
         DispatchQueue.global(qos: .default).async {
             //
-            let result = self.parseResponse()
+            let r = result ?? self.parseResponse()
             //
             DispatchQueue.main.async {
                 //
-                self.completionHandler?(result)
+                self.completionHandler?(r)
             }
             //
             self.requestQueue?.onFinishRequest(self)

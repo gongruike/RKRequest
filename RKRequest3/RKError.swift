@@ -25,11 +25,7 @@
 
 public enum RKError: Error {
     //
-    case requestGenerationFailed
-    //
     case incorrectRequestType
-    //
-    case emptyResponse
     //
 //    case errorRes(code: Int, reason: String)
 }

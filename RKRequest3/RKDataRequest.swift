@@ -26,29 +26,11 @@ import Alamofire
 // ResultType is the type that user define model of developer, like "User", "Feed", "Node"
 
 open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResultType> {
+
+    //
+    var dataRequest: DataRequest? { return request as? DataRequest }
     
-    var dataRequest: DataRequest? {
-        return request as? DataRequest
-    }
-    
+    //
     var dataResponse: DataResponse<ResponseType>?
-    
-    override open func serializeRequest(in requestQueue: RKRequestQueueType) {
-        //
-        self.requestQueue = requestQueue
-        //
-        request = requestQueue.sessionManager.request(
-            url,
-            method: method,
-            parameters: parameters,
-            encoding: encoding,
-            headers: headers
-        )
-    }
-    
-    open func dataProgress(queue: DispatchQueue = DispatchQueue.main, closure: @escaping RKProgressHandler) {
-        //
-        dataRequest?.downloadProgress(queue: queue, closure: closure)
-    }
     
 }

@@ -43,6 +43,8 @@ public protocol RKRequestable {
     func start()
     //
     func cancel()
+    //
+    func setupDataParser()
 }
 
 //

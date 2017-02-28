@@ -22,9 +22,9 @@
 
 import Alamofire
 
-open class RKRequest<Value>: RKRequestable {
+open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
-    public typealias RKCompletionHandler = (Result<Value>) -> Void
+    public typealias RKCompletionHandler = (Result<ResultType>) -> Void
     
     open var url: URLConvertible
     
@@ -38,6 +38,8 @@ open class RKRequest<Value>: RKRequestable {
 
     open var request: Request?
     
+    open var response: DataResponse<ResponseType>?
+
     open var requestQueue: RKRequestQueueType?
 
     open var completionHandler: RKCompletionHandler?
@@ -66,7 +68,7 @@ open class RKRequest<Value>: RKRequestable {
         //
         guard let request = request else { return }
         //
-        addResponseDataParseHandler()
+        setupDataParser()
         //
         request.resume()
         //
@@ -81,12 +83,12 @@ open class RKRequest<Value>: RKRequestable {
     }
     
     //
-    open func addResponseDataParseHandler() {
-        //
+    open func setupDataParser() {
+        // Vary on different ResponseType
     }
     
     //
-    open func parseResponse() -> Result<Value> {
+    open func parseResponse(_ response: DataResponse<ResponseType>) -> Result<ResultType> {
         //
         return Result.failure(RKError.incorrectRequestType)
     }
@@ -96,7 +98,7 @@ open class RKRequest<Value>: RKRequestable {
         //
         DispatchQueue.global(qos: .default).sync {
             //
-            let result = self.parseResponse()
+            let result = self.response != nil ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
             //
             DispatchQueue.main.sync {
                 //

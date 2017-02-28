@@ -23,11 +23,9 @@
 import Alamofire
 
 // ResponseType is the data type from server, like JSON, XML
-// Value is the type that user define model of developer, like "User", "Feed", "Node"
+// Value is the type that user define model of developer, like "User model", "Feed list", "Node info"
 
-open class RKDataRequest<ResponseType, Value>: RKRequest<Value> {
+open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
     //
-    var dataRequest: DataRequest? { return request as? DataRequest }
-    //
-    var dataResponse: DataResponse<ResponseType>?
+    open var dataRequest: DataRequest? { return request as? DataRequest }
 }

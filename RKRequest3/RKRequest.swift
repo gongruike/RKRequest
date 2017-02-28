@@ -66,11 +66,11 @@ open class RKRequest<Value>: RKRequestable {
         //
         guard let request = request else { return }
         //
-        setupResponseDataParseHandler()
+        addResponseDataParseHandler()
         //
         request.resume()
         //
-        requestQueue?.onSendRequest(self)
+        requestQueue?.onRequestStarted(self)
     }
     
     open func cancel() {
@@ -78,12 +78,10 @@ open class RKRequest<Value>: RKRequestable {
         guard let request = request else { return }
         //
         request.cancel()
-        //
-        deliverResult(Result.failure(RKError.incorrectRequestType))
     }
     
     //
-    open func setupResponseDataParseHandler() {
+    open func addResponseDataParseHandler() {
         //
     }
     
@@ -94,18 +92,18 @@ open class RKRequest<Value>: RKRequestable {
     }
     
     //
-    open func deliverResult(_ result: Result<Value>? = nil) {
+    open func deliverResult() {
         //
         DispatchQueue.global(qos: .default).sync {
             //
-            let res = result ?? self.parseResponse()
+            let result = self.parseResponse()
             //
             DispatchQueue.main.sync {
                 //
-                self.completionHandler?(res)
+                self.completionHandler?(result)
             }
             //
-            self.requestQueue?.onFinishRequest(self)
+            self.requestQueue?.onRequestFinished(self)
         }
     }
     

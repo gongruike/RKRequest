@@ -50,14 +50,9 @@ public protocol RKRequestQueueType {
     //
     var sessionManager: SessionManager { get }
     //
-    func onSendRequest(_ request: RKRequestable)
+    func onRequestStarted(_ request: RKRequestable)
     //
-    func onFinishRequest(_ request: RKRequestable)
-    
-//    func onRequestStarted(_ request: RKRequestable)
-//    
-//    func onRequestFinished(_ request: RKRequestable)
-    
+    func onRequestFinished(_ request: RKRequestable)
 }
 
 public protocol RKRequestQueueDelegate {
@@ -66,5 +61,3 @@ public protocol RKRequestQueueDelegate {
     //
     func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable)
 }
-
-

@@ -26,11 +26,8 @@ import Alamofire
 // Value is the type that user define model of developer, like "User", "Feed", "Node"
 
 open class RKDataRequest<ResponseType, Value>: RKRequest<Value> {
-
     //
     var dataRequest: DataRequest? { return request as? DataRequest }
-    
     //
     var dataResponse: DataResponse<ResponseType>?
-    
 }

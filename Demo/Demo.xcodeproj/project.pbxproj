@@ -217,12 +217,12 @@
 		9F5861A11D93B38A00351795 /* RKRequest3 */ = {
 			isa = PBXGroup;
 			children = (
+				9F5861A21D93B38A00351795 /* RKConfiguration.swift */,
+				9F5861A31D93B38A00351795 /* RKDataRequest.swift */,
 				9F5861A51D93B38A00351795 /* RKError.swift */,
 				9F5861A61D93B38A00351795 /* RKRequest.swift */,
 				9F5568791E5EDA11002F9ECF /* RKRequestable.swift */,
-				9F5861A31D93B38A00351795 /* RKDataRequest.swift */,
 				9F5861A71D93B38A00351795 /* RKRequestQueue.swift */,
-				9F5861A21D93B38A00351795 /* RKConfiguration.swift */,
 				9F5861A81D93B38A00351795 /* RKTypeRequest.swift */,
 			);
 			name = RKRequest3;

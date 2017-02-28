@@ -29,9 +29,9 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open let configuration: RKConfiguration
     
-    open var activeRequestCount: Int = 0
-    
     open var delegate: RKRequestQueueDelegate?
+
+    open var activeRequestCount: Int = 0
     
     open var queuedRequests: [RKRequestable] = []
     
@@ -108,7 +108,7 @@ open class RKRequestQueue: RKRequestQueueType {
         return activeRequestCount < configuration.maximumActiveRequestCount
     }
     
-    open func onSendRequest(_ request: RKRequestable) {
+    open func onRequestStarted(_ request: RKRequestable) {
         //
         activeRequestCount += 1
         //
@@ -118,7 +118,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    open func onFinishRequest(_ request: RKRequestable) {
+    open func onRequestFinished(_ request: RKRequestable) {
         //
         synchronizationQueue.sync {
             //

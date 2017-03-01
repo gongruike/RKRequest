@@ -91,7 +91,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     //
-    open func parseResponse(_ response: DataResponse<ResponseType>) -> Result<ResultType> {
+    open func parseResponse(_ unserializedResponse: DataResponse<ResponseType>) -> Result<ResultType> {
         //
         return Result.failure(RKError.incorrectRequestType)
     }

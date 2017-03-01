@@ -30,9 +30,9 @@ open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
     
     open override func setDataParseHandler() {
         //
-        dataRequest?.responseString(completionHandler: { response -> Void in
+        dataRequest?.responseString(completionHandler: { dateResponse -> Void in
             //
-            self.response = response
+            self.response = dateResponse
             //
             self.deliverResult()
         })
@@ -44,9 +44,9 @@ open class RKJSONRequest<ResultType>: RKDataRequest<Any, ResultType> {
     
     open override func setDataParseHandler() {
         //
-        dataRequest?.responseJSON(completionHandler: { response -> Void in
+        dataRequest?.responseJSON(completionHandler: { dateResponse -> Void in
             //
-            self.response = response
+            self.response = dateResponse
             //
             self.deliverResult()
         })

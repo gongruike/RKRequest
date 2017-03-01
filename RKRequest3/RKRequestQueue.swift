@@ -52,13 +52,13 @@ open class RKRequestQueue: RKRequestQueueType {
         self.sessionManager.startRequestsImmediately = false
     }
     
-    open func addRequest(_ request: RKRequestable) {
+    open func startRequest(_ request: RKRequestable) {
         //
         synchronizationQueue.sync {
             //
             if self.isActiveRequestCountBelowMaximumLimit() {
                 //
-                self.startRequest(request)
+                self.startActualRequest(request)
             } else {
                 //
                 self.enqueueRequest(request)
@@ -66,7 +66,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
 
-    private func startRequest(_ request: RKRequestable) {
+    private func startActualRequest(_ request: RKRequestable) {
         //
         request.serializeRequest(in: self)
         //
@@ -79,7 +79,7 @@ open class RKRequestQueue: RKRequestQueueType {
         //
         guard let request = dequeueRequest() else { return }
         //
-        startRequest(request)
+        startActualRequest(request)
     }
     
     private func enqueueRequest(_ request: RKRequestable) {

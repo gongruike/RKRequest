@@ -6,7 +6,6 @@
 //  Copyright © 2017年 gongruike. All rights reserved.
 //
 
-import UIKit
 import Alamofire
 import SwiftyJSON
 
@@ -14,9 +13,9 @@ class RKSwiftyJSONRequest<ResultType>: RKDataRequest<SwiftyJSON.JSON, ResultType
 
     override func setDataParseHandler() {
         //
-        dataRequest?.responseSwiftyJSON(completionHandler: { (response) in
+        dataRequest?.responseSwiftyJSON(completionHandler: { dateResponse in
             //
-            self.response = response
+            self.response = dateResponse
             //
             self.deliverResult()
         })

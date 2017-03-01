@@ -26,6 +26,7 @@
 		9FD251AD1E6670C700DBCDE7 /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251AC1E6670C700DBCDE7 /* Alamofire-SwiftyJSON.swift */; };
 		9FD251AF1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */; };
 		9FD251B11E66716E00DBCDE7 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251B01E66716E00DBCDE7 /* RequestModel.swift */; };
+		9FD251B31E66747800DBCDE7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251B21E66747800DBCDE7 /* HTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +184,7 @@
 		9FD251AC1E6670C700DBCDE7 /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
 		9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKSwiftyJSONRequest.swift; sourceTree = "<group>"; };
 		9FD251B01E66716E00DBCDE7 /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
+		9FD251B21E66747800DBCDE7 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 				9FD251AC1E6670C700DBCDE7 /* Alamofire-SwiftyJSON.swift */,
 				9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */,
 				9FD251B01E66716E00DBCDE7 /* RequestModel.swift */,
+				9FD251B21E66747800DBCDE7 /* HTTPClient.swift */,
 				9F5861771D93B36C00351795 /* Main.storyboard */,
 				9F58617A1D93B36C00351795 /* Assets.xcassets */,
 				9F58617C1D93B36C00351795 /* LaunchScreen.storyboard */,
@@ -561,6 +564,7 @@
 			files = (
 				9F5861AA1D93B38A00351795 /* RKConfiguration.swift in Sources */,
 				9F5861AF1D93B38A00351795 /* RKRequestQueue.swift in Sources */,
+				9FD251B31E66747800DBCDE7 /* HTTPClient.swift in Sources */,
 				9FD251AD1E6670C700DBCDE7 /* Alamofire-SwiftyJSON.swift in Sources */,
 				9F5861761D93B36C00351795 /* ViewController.swift in Sources */,
 				9F5861AB1D93B38A00351795 /* RKDataRequest.swift in Sources */,

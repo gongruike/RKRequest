@@ -31,9 +31,9 @@ public enum RKPrioritization {
 
 open class RKConfiguration {
     //
-    open var maximumActiveRequestCount: Int
+    open let maximumActiveRequestCount: Int
     //
-    open var prioritization: RKPrioritization
+    open let prioritization: RKPrioritization
     //
     open let configuration: URLSessionConfiguration
     //
@@ -60,7 +60,7 @@ open class RKConfiguration {
         
         configuration.requestCachePolicy            = .useProtocolCachePolicy
         configuration.allowsCellularAccess          = true
-        configuration.timeoutIntervalForResource    = 15
+        configuration.timeoutIntervalForResource    = 10
         
         configuration.urlCache = defaultURLCache()
         

@@ -22,6 +22,9 @@
 
 import Alamofire
 
+// ResponseType is the data type from server, like JSON, XML
+// ResultType is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
+
 open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
     public typealias RKCompletionHandler = (Result<ResultType>) -> Void
@@ -68,7 +71,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         //
         guard let request = request else { return }
         //
-        setupDataParser()
+        setDataParseHandler()
         //
         request.resume()
         //
@@ -83,7 +86,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     //
-    open func setupDataParser() {
+    open func setDataParseHandler() {
         // Vary on different ResponseType
     }
     
@@ -98,7 +101,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         //
         DispatchQueue.global(qos: .default).sync {
             //
-            let result = self.response != nil ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
+            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
             //
             DispatchQueue.main.sync {
                 //

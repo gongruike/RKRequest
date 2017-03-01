@@ -40,11 +40,11 @@ public protocol RKRequestable {
     //
     func serializeRequest(in requestQueue: RKRequestQueueType)
     //
+    func setDataParseHandler()
+    //
     func start()
     //
     func cancel()
-    //
-    func setupDataParser()
 }
 
 //

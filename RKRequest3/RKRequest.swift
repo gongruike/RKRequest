@@ -99,11 +99,11 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     //
     open func deliverResult() {
         //
-        DispatchQueue.global(qos: .default).sync {
+        DispatchQueue.global(qos: .default).async {
             //
             let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
             //
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 //
                 self.completionHandler?(result)
             }

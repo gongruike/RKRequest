@@ -24,11 +24,12 @@ class HTTPClient: RKRequestQueueDelegate {
     
     func startRequest(_ request: RKRequestable) {
         //
+        // 此处可做逻辑判断
         requestQueue.startRequest(request)
     }
     
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable) {
-        
+        //
     }
     
     func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable) {

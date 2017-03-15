@@ -57,6 +57,7 @@ public protocol RKRequestQueueType {
     func onRequestFinished(_ request: RKRequestable)
 }
 
+//
 public protocol RKRequestQueueDelegate {
     //
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable)

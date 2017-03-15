@@ -38,6 +38,7 @@ open class RKRequestQueue: RKRequestQueueType {
     let synchronizationQueue: DispatchQueue = {
         //
         let name = String(format: "cn.rk.request.synchronization.queue-%08%08", arc4random(), arc4random())
+        //
         return DispatchQueue(label: name)
     }()
     
@@ -54,7 +55,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func startRequest(_ request: RKRequestable) {
         //
-        synchronizationQueue.sync {
+        synchronizationQueue.async {
             //
             if self.isActiveRequestCountBelowMaximumLimit() {
                 //
@@ -112,7 +113,7 @@ open class RKRequestQueue: RKRequestQueueType {
         //
         activeRequestCount += 1
         //
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             //
             self.delegate?.requestQueue(self, didStart: request)
         }
@@ -120,7 +121,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func onRequestFinished(_ request: RKRequestable) {
         //
-        synchronizationQueue.sync {
+        synchronizationQueue.async {
             //
             if self.activeRequestCount > 0 {
                 self.activeRequestCount -= 1
@@ -128,7 +129,7 @@ open class RKRequestQueue: RKRequestQueueType {
             self.startNextRequest()
         }
         //
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             //
             self.delegate?.requestQueue(self, didFinish: request)
         }

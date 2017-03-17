@@ -25,11 +25,25 @@ class User {
 
 class BaseRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
     
-    /*
     override func serializeRequest(in requestQueue: RKRequestQueueType) {
         // 在此处统一格式化请求
+        self.requestQueue = requestQueue
+        //
+        do {
+            let aURL = try url.asURL()
+            url = URL(string: aURL.absoluteString, relativeTo: URL(string: "http://www.baidu.com"))!
+        } catch {
+            print(error)
+        }
+        //
+        self.request = self.requestQueue?.sessionManager.request(
+            url,
+            method: method,
+            parameters: parameters,
+            encoding: encoding,
+            headers: headers
+        )
     }
-     */
     
 }
 
@@ -51,7 +65,12 @@ class UserInfoRequest: BaseRequest<User> {
     
 }
 
-class UserListRequest: RKSwiftyJSONRequest<[User]> {
+class UserListRequest: BaseRequest<[User]> {
+    
+    init(completionHandler: RKCompletionHandler?) {
+        //
+        super.init(url: "/users", completionHandler: completionHandler)
+    }
     
     override func parseResponse(_ unserializedResponse: DataResponse<JSON>) -> Result<Array<User>> {
         //
@@ -64,4 +83,21 @@ class UserListRequest: RKSwiftyJSONRequest<[User]> {
     }
     
 }
+
+class BaseListRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
+    
+    let pageNumber: Int
+    
+    let pageSize: Int
+    
+    init(pageNumber: Int, pageSize: Int, url: URLConvertible, completionHandler: RKCompletionHandler?) {
+        //
+        self.pageNumber = pageNumber
+        self.pageSize = pageSize
+        //
+        super.init(url: url, completionHandler: completionHandler)
+    }
+    
+}
+
 

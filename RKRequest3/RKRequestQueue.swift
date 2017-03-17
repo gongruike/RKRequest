@@ -43,12 +43,14 @@ open class RKRequestQueue: RKRequestQueueType {
     }()
     
     public init(configuration: RKConfiguration) {
-        
+        //
         self.configuration = configuration
-        
-        self.sessionManager = SessionManager(configuration: configuration.configuration,
-                                             delegate: SessionDelegate(),
-                                             serverTrustPolicyManager: configuration.trustPolicyManager)
+        //
+        self.sessionManager = SessionManager(
+            configuration: configuration.configuration,
+            delegate: SessionDelegate(),
+            serverTrustPolicyManager: configuration.trustPolicyManager
+        )
         // Important
         self.sessionManager.startRequestsImmediately = false
     }

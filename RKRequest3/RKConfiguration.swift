@@ -31,18 +31,20 @@ public enum RKPrioritization {
 
 open class RKConfiguration {
     //
-    open let maximumActiveRequestCount: Int
+    open var maximumActiveRequestCount: Int
     //
-    open let prioritization: RKPrioritization
+    open var prioritization: RKPrioritization
     //
     open let configuration: URLSessionConfiguration
     //
     open let trustPolicyManager: ServerTrustPolicyManager?
     
-    public init(maximumActiveRequestCount: Int = 3,
-                prioritization: RKPrioritization = .fifo,
-                configuration: URLSessionConfiguration = RKConfiguration.defaultURLSessionConfiguration(),
-                trustPolicyManager: ServerTrustPolicyManager? = nil) {
+    public init(
+        maximumActiveRequestCount: Int = 3,
+        prioritization: RKPrioritization = .fifo,
+        configuration: URLSessionConfiguration = RKConfiguration.defaultURLSessionConfiguration(),
+        trustPolicyManager: ServerTrustPolicyManager? = nil)
+    {
         //
         self.maximumActiveRequestCount  = maximumActiveRequestCount
         self.prioritization             = prioritization
@@ -50,6 +52,7 @@ open class RKConfiguration {
         self.trustPolicyManager         = trustPolicyManager
     }
     
+    // Copy from AlamofireImage
     open class func defaultURLSessionConfiguration() -> URLSessionConfiguration {
         //
         let configuration = URLSessionConfiguration.default
@@ -62,7 +65,7 @@ open class RKConfiguration {
         configuration.allowsCellularAccess          = true
         configuration.timeoutIntervalForResource    = 10
         
-        configuration.urlCache = defaultURLCache()
+        configuration.urlCache                      = RKConfiguration.defaultURLCache()
         
         return configuration
     }

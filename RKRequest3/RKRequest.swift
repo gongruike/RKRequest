@@ -53,7 +53,6 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         self.completionHandler = completionHandler
     }
     
-    //
     open func serializeRequest(in requestQueue: RKRequestQueueType) {
         //
         self.requestQueue = requestQueue
@@ -69,20 +68,16 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     
     open func start() {
         //
-        guard let request = request else { return }
-        //
         setDataParseHandler()
         //
-        request.resume()
+        request?.resume()
         //
         requestQueue?.onRequestStarted(self)
     }
     
     open func cancel() {
         //
-        guard let request = request else { return }
-        //
-        request.cancel()
+        request?.cancel()
     }
     
     //

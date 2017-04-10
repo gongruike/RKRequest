@@ -28,6 +28,8 @@ public enum RKError: Error {
     case incorrectRequestType
     //
     case emptyResponse
+    //
+    case codeMessageError(Int, String)
 }
 
 extension RKError: LocalizedError {
@@ -38,6 +40,8 @@ extension RKError: LocalizedError {
             return "Incorrect request type, please use a valid request type"
         case .emptyResponse:
             return "Empty response"
+        case .codeMessageError(let code, let messge):
+            return "\(code), \(messge)"
         }
     }
 }

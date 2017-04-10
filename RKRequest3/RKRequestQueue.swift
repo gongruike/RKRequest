@@ -22,6 +22,7 @@
 
 
 import Alamofire
+import Foundation
 
 open class RKRequestQueue: RKRequestQueueType {
     
@@ -35,12 +36,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open var queuedRequests: [RKRequestable] = []
     
-    let synchronizationQueue: DispatchQueue = {
-        //
-        let name = String(format: "cn.rk.request.synchronization.queue-%08%08", arc4random(), arc4random())
-        //
-        return DispatchQueue(label: name)
-    }()
+    let synchronizationQueue = DispatchQueue(label: "cn.rk.request.synchronization.queue." + UUID().uuidString)
     
     public init(configuration: RKConfiguration) {
         //

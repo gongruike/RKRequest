@@ -39,9 +39,7 @@ open class RKRequestQueue: RKRequestQueueType {
     let synchronizationQueue = DispatchQueue(label: "cn.rk.request.synchronization.queue." + UUID().uuidString)
     
     public init(configuration: RKConfiguration) {
-        //
         self.configuration = configuration
-        //
         self.sessionManager = SessionManager(
             configuration: configuration.configuration,
             delegate: SessionDelegate(),
@@ -53,14 +51,13 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open func startRequest(_ request: RKRequestable) {
         //
-        synchronizationQueue.async {
-            //
-            if self.isActiveRequestCountBelowMaximumLimit() {
-                //
-                self.startActualRequest(request)
+        synchronizationQueue.async { [weak self] in
+            guard let strongSelf = self else { return }
+
+            if strongSelf.isActiveRequestCountBelowMaximumLimit() {
+                strongSelf.startActualRequest(request)
             } else {
-                //
-                self.enqueueRequest(request)
+                strongSelf.enqueueRequest(request)
             }
         }
     }
@@ -68,16 +65,14 @@ open class RKRequestQueue: RKRequestQueueType {
     private func startActualRequest(_ request: RKRequestable) {
         //
         request.serializeRequest(in: self)
-        //
         request.start()
     }
     
     private func startNextRequest() {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
-        //
         guard let request = dequeueRequest() else { return }
-        //
+        
         startActualRequest(request)
     }
     
@@ -94,42 +89,41 @@ open class RKRequestQueue: RKRequestQueueType {
     private func dequeueRequest() -> RKRequestable? {
         //
         var request: RKRequestable?
-        //
         if !queuedRequests.isEmpty {
             request = queuedRequests.removeFirst()
         }
-        //
         return request
     }
     
     private func isActiveRequestCountBelowMaximumLimit() -> Bool {
-        //
         return activeRequestCount < configuration.maximumActiveRequestCount
     }
     
     open func onRequestStarted(_ request: RKRequestable) {
-        //
         activeRequestCount += 1
-        //
-        DispatchQueue.main.async {
-            //
-            self.delegate?.requestQueue(self, didStart: request)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+
+            strongSelf.delegate?.requestQueue(strongSelf, didStart: request)
         }
     }
     
     open func onRequestFinished(_ request: RKRequestable) {
         //
-        synchronizationQueue.async {
-            //
-            if self.activeRequestCount > 0 {
-                self.activeRequestCount -= 1
+        synchronizationQueue.async { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            if strongSelf.activeRequestCount > 0 {
+                strongSelf.activeRequestCount -= 1
             }
-            self.startNextRequest()
+            strongSelf.startNextRequest()
         }
-        //
-        DispatchQueue.main.async {
-            //
-            self.delegate?.requestQueue(self, didFinish: request)
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+
+            strongSelf.delegate?.requestQueue(strongSelf, didFinish: request)
         }
     }
     

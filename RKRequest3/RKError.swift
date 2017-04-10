@@ -24,16 +24,16 @@
 import Foundation
 
 public enum RKError: Error {
-    //
+    
     case incorrectRequestType
-    //
+    
     case emptyResponse
-    //
+    
     case codeMessageError(Int, String)
 }
 
 extension RKError: LocalizedError {
-    //
+    
     public var errorDescription: String? {
         switch self {
         case .incorrectRequestType:

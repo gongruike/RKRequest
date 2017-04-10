@@ -38,7 +38,7 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     open var encoding: ParameterEncoding = URLEncoding.default
     
     open var headers: HTTPHeaders = [:]
-
+    
     open var request: Request?
     
     open var response: DataResponse<ResponseType>?
@@ -48,15 +48,13 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     open var completionHandler: RKCompletionHandler?
 
     public init(url: URLConvertible, completionHandler: RKCompletionHandler?) {
-        //
         self.url = url
         self.completionHandler = completionHandler
     }
     
     open func serializeRequest(in requestQueue: RKRequestQueueType) {
-        //
         self.requestQueue = requestQueue
-        //
+        
         self.request = requestQueue.sessionManager.request(
             url,
             method: method,
@@ -67,43 +65,38 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     open func start() {
-        //
         setDataParseHandler()
-        //
+        
         request?.resume()
-        //
+        
         requestQueue?.onRequestStarted(self)
     }
     
     open func cancel() {
-        //
         request?.cancel()
     }
     
-    //
     open func setDataParseHandler() {
         // Vary on different ResponseType
     }
     
-    //
     open func parseResponse(_ unserializedResponse: DataResponse<ResponseType>) -> Result<ResultType> {
-        //
         return Result.failure(RKError.incorrectRequestType)
     }
     
-    //
     open func deliverResult() {
-        //
-        DispatchQueue.global(qos: .default).async {
-            //
-            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
-            //
+        DispatchQueue.global(qos: .default).async { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            let result = (strongSelf.response != nil) ? strongSelf.parseResponse(strongSelf.response!) : Result.failure(RKError.emptyResponse)
+            
             DispatchQueue.main.async {
-                //
-                self.completionHandler?(result)
+                guard let strongSelf = self else { return }
+                
+                strongSelf.completionHandler?(result)
             }
-            //
-            self.requestQueue?.onRequestFinished(self)
+            
+            strongSelf.requestQueue?.onRequestFinished(strongSelf)
         }
     }
     

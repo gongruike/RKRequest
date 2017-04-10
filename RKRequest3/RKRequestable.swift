@@ -23,44 +23,42 @@
 import Alamofire
 
 public protocol RKRequestable {
-    //
+    
     var url: URLConvertible { get }
-    //
+    
     var method: HTTPMethod { get }
-    //
+    
     var parameters: Parameters { get }
-    //
+    
     var encoding: ParameterEncoding { get }
-    //
+    
     var headers: HTTPHeaders { get }
-    //
+    
     var request: Request? { get }
-    //
+    
     var requestQueue: RKRequestQueueType? { get }
-    //
+    
     func serializeRequest(in requestQueue: RKRequestQueueType)
-    //
+    
     func setDataParseHandler()
-    //
+    
     func start()
-    //
+    
     func cancel()
 }
 
-//
 public protocol RKRequestQueueType {
     //
     var sessionManager: SessionManager { get }
-    //
+    
     func onRequestStarted(_ request: RKRequestable)
-    //
+    
     func onRequestFinished(_ request: RKRequestable)
 }
 
-//
 public protocol RKRequestQueueDelegate {
     //
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable)
-    //
+    
     func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable)
 }

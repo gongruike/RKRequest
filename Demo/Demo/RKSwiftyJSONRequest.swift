@@ -15,9 +15,7 @@ class RKSwiftyJSONRequest<ResultType>: RKDataRequest<SwiftyJSON.JSON, ResultType
     override func setDataParseHandler() {
         //
         dataRequest?.responseSwiftyJSON(completionHandler: { dateResponse in
-            //
             self.response = dateResponse
-            //
             self.deliverResult()
         })
     }

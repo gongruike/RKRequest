@@ -29,11 +29,8 @@ import Alamofire
 open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
     
     open override func setDataParseHandler() {
-        //
         dataRequest?.responseString(completionHandler: { dateResponse -> Void in
-            //
             self.response = dateResponse
-            //
             self.deliverResult()
         })
     }
@@ -43,11 +40,8 @@ open class RKStringRequest<ResultType>: RKDataRequest<String, ResultType> {
 open class RKJSONRequest<ResultType>: RKDataRequest<Any, ResultType> {
     
     open override func setDataParseHandler() {
-        //
         dataRequest?.responseJSON(completionHandler: { dateResponse -> Void in
-            //
             self.response = dateResponse
-            //
             self.deliverResult()
         })
     }

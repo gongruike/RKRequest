@@ -24,19 +24,17 @@ import Alamofire
 
 public enum RKPrioritization {
     //
-    case fifo
-    //
-    case lifo
+    case fifo, lifo
 }
 
 open class RKConfiguration {
-    //
+    
     open var maximumActiveRequestCount: Int
-    //
+    
     open var prioritization: RKPrioritization
-    //
+    
     open let configuration: URLSessionConfiguration
-    //
+    
     open let trustPolicyManager: ServerTrustPolicyManager?
     
     public init(
@@ -45,7 +43,6 @@ open class RKConfiguration {
         configuration: URLSessionConfiguration = RKConfiguration.defaultURLSessionConfiguration(),
         trustPolicyManager: ServerTrustPolicyManager? = nil)
     {
-        //
         self.maximumActiveRequestCount  = maximumActiveRequestCount
         self.prioritization             = prioritization
         self.configuration              = configuration
@@ -54,7 +51,6 @@ open class RKConfiguration {
     
     // Copy from AlamofireImage
     open class func defaultURLSessionConfiguration() -> URLSessionConfiguration {
-        //
         let configuration = URLSessionConfiguration.default
         
         configuration.httpAdditionalHeaders         = SessionManager.defaultHTTPHeaders
@@ -71,7 +67,6 @@ open class RKConfiguration {
     }
     
     open class func defaultURLCache() -> URLCache {
-        //
         return URLCache(
             memoryCapacity: 20 * 1024 * 1024, // 20 MB
             diskCapacity: 100 * 1024 * 1024,  // 100 MB

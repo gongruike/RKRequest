@@ -23,20 +23,6 @@ class User {
     
 }
 
-struct HandlableResult<Value> {
-    //
-    let code: Int
-    //
-    let message: String
-    //
-    let value: Value?
-    
-    func isSuccess() -> Bool {
-        //
-        return code == 0
-    }
-}
-
 class BaseRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
     
     override func serializeRequest(in requestQueue: RKRequestQueueType) {
@@ -105,7 +91,6 @@ class BaseListRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
     let pageSize: Int
     
     init(pageNumber: Int, pageSize: Int, url: URLConvertible, completionHandler: RKCompletionHandler?) {
-        //
         self.pageNumber = pageNumber
         self.pageSize = pageSize
         //

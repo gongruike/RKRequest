@@ -53,7 +53,7 @@ open class RKRequestQueue: RKRequestQueueType {
         //
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
-
+            
             if strongSelf.isActiveRequestCountBelowMaximumLimit() {
                 strongSelf.startActualRequest(request)
             } else {
@@ -102,15 +102,12 @@ open class RKRequestQueue: RKRequestQueueType {
     open func onRequestStarted(_ request: RKRequestable) {
         activeRequestCount += 1
         
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-
-            strongSelf.delegate?.requestQueue(strongSelf, didStart: request)
+        DispatchQueue.main.async {
+            self.delegate?.requestQueue(self, didStart: request)
         }
     }
     
     open func onRequestFinished(_ request: RKRequestable) {
-        //
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -120,10 +117,8 @@ open class RKRequestQueue: RKRequestQueueType {
             strongSelf.startNextRequest()
         }
         
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-
-            strongSelf.delegate?.requestQueue(strongSelf, didFinish: request)
+        DispatchQueue.main.async {
+            self.delegate?.requestQueue(self, didFinish: request)
         }
     }
     

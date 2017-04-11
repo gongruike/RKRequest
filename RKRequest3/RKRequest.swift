@@ -22,9 +22,10 @@
 
 import Alamofire
 
-// ResponseType is the data type from server, like JSON, XML
-// ResultType is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
-
+/*
+    ResponseType is the data type from server, like JSON, XML
+    ResultType is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
+*/
 open class RKRequest<ResponseType, ResultType>: RKRequestable {
 
     public typealias RKCompletionHandler = (Result<ResultType>) -> Void
@@ -85,18 +86,16 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     open func deliverResult() {
-        DispatchQueue.global(qos: .default).async { [weak self] in
-            guard let strongSelf = self else { return }
+        DispatchQueue.global(qos: .default).async {
+            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
             
-            let result = (strongSelf.response != nil) ? strongSelf.parseResponse(strongSelf.response!) : Result.failure(RKError.emptyResponse)
-            
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else { return }
                 
                 strongSelf.completionHandler?(result)
             }
             
-            strongSelf.requestQueue?.onRequestFinished(strongSelf)
+            self.requestQueue?.onRequestFinished(self)
         }
     }
     

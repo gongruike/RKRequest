@@ -25,23 +25,21 @@ import Foundation
 
 public enum RKError: Error {
     
-    case incorrectRequestType
-    
-    case emptyResponse
-    
-    case codeMessageError(Int, String)
+    case invalidRequestType
+    case requestGenerationFailed
+    case messageError(String)
 }
 
 extension RKError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case .incorrectRequestType:
-            return "Incorrect request type, please use a valid request type"
-        case .emptyResponse:
-            return "Empty response"
-        case .codeMessageError(let code, let messge):
-            return "\(code), \(messge)"
+        case .invalidRequestType:
+            return "Invalid request type"
+        case .requestGenerationFailed:
+            return "Fail to generate request"
+        case .messageError(let messge):
+            return messge
         }
     }
 }

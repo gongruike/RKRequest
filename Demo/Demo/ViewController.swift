@@ -15,6 +15,7 @@ class ViewController: UIViewController {
         //
         let request = UserInfoRequest(userID: userID) { (result) in
             //
+            print(Thread.isMainThread)
             switch result {
             case .success(let user):
                 print(user)
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
         //
         let request = UserListRequest { (result) in
             //
+            print(Thread.isMainThread)
             switch result {
             case .success(let users):
                 print(users)

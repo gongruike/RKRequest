@@ -26,23 +26,24 @@ class User {
 class BaseRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
     
     override func serializeRequest(in requestQueue: RKRequestQueueType) {
-        // 在此处统一格式化请求
-        self.requestQueue = requestQueue
         //
+        self.requestQueue = requestQueue
+        
         do {
             let aURL = try url.asURL()
             url = URL(string: aURL.absoluteString, relativeTo: URL(string: "http://www.baidu.com"))!
+            
+            self.request = self.requestQueue?.sessionManager.request(
+                url,
+                method: method,
+                parameters: parameters,
+                encoding: encoding,
+                headers: headers
+            )
         } catch {
-            print(error)
+            // RKError.requestGenerationFailed
+            self.deliverResult()
         }
-        //
-        self.request = self.requestQueue?.sessionManager.request(
-            url,
-            method: method,
-            parameters: parameters,
-            encoding: encoding,
-            headers: headers
-        )
     }
     
 }

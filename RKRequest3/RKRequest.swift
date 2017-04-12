@@ -82,17 +82,15 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     }
     
     open func parseResponse(_ unserializedResponse: DataResponse<ResponseType>) -> Result<ResultType> {
-        return Result.failure(RKError.incorrectRequestType)
+        return Result.failure(RKError.invalidRequestType)
     }
     
     open func deliverResult() {
         DispatchQueue.global(qos: .default).async {
-            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.emptyResponse)
+            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed)
             
-            DispatchQueue.main.async { [weak self] in
-                guard let strongSelf = self else { return }
-                
-                strongSelf.completionHandler?(result)
+            DispatchQueue.main.async {
+                self.completionHandler?(result)
             }
             
             self.requestQueue?.onRequestFinished(self)

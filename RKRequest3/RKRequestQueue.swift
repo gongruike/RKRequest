@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Ruike Gong
+// Copyright (c) 2016 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 
 import Alamofire
-import Foundation
 
 open class RKRequestQueue: RKRequestQueueType {
     
@@ -30,7 +29,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open let configuration: RKConfiguration
     
-    open var delegate: RKRequestQueueDelegate?
+    weak open var delegate: RKRequestQueueDelegate?
 
     open var activeRequestCount: Int = 0
     
@@ -49,31 +48,40 @@ open class RKRequestQueue: RKRequestQueueType {
         self.sessionManager.startRequestsImmediately = false
     }
     
-    open func startRequest(_ request: RKRequestable) {
+    open func enqueue(_ request: RKRequestable) {
         //
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             
             if strongSelf.isActiveRequestCountBelowMaximumLimit() {
-                strongSelf.startActualRequest(request)
+                strongSelf.start(request)
             } else {
                 strongSelf.enqueueRequest(request)
             }
         }
     }
-
-    private func startActualRequest(_ request: RKRequestable) {
+    
+    open func dequeue() -> RKRequestable? {
         //
-        request.serializeRequest(in: self)
+        var request: RKRequestable?
+        if !queuedRequests.isEmpty {
+            request = queuedRequests.removeFirst()
+        }
+        return request
+    }
+
+    private func start(_ request: RKRequestable) {
+        //
+        request.serialize(in: self)
         request.start()
     }
     
     private func startNextRequest() {
         //
         guard isActiveRequestCountBelowMaximumLimit() else { return }
-        guard let request = dequeueRequest() else { return }
+        guard let request = dequeue() else { return }
         
-        startActualRequest(request)
+        start(request)
     }
     
     private func enqueueRequest(_ request: RKRequestable) {
@@ -84,15 +92,6 @@ open class RKRequestQueue: RKRequestQueueType {
         case .lifo:
             queuedRequests.insert(request, at: 0)
         }
-    }
-    
-    private func dequeueRequest() -> RKRequestable? {
-        //
-        var request: RKRequestable?
-        if !queuedRequests.isEmpty {
-            request = queuedRequests.removeFirst()
-        }
-        return request
     }
     
     private func isActiveRequestCountBelowMaximumLimit() -> Bool {

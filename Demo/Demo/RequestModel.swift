@@ -23,9 +23,9 @@ class User {
     
 }
 
-class BaseRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
+class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     
-    override func serializeRequest(in requestQueue: RKRequestQueueType) {
+    override func serialize(in requestQueue: RKRequestQueueType) {
         //
         self.requestQueue = requestQueue
         
@@ -41,8 +41,8 @@ class BaseRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
                 headers: headers
             )
         } catch {
-            // RKError.requestGenerationFailed
-            self.deliverResult()
+            //
+            self.deliverResult(Result.failure(error))
         }
     }
     

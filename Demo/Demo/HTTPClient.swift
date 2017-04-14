@@ -12,20 +12,18 @@ class HTTPClient: RKRequestQueueDelegate {
 
     static let shared = HTTPClient()
     
-    private let requestQueue: RKRequestQueue
+    private let requestQueue: RKRequestQueueType
 
     init() {
-        //
         let configuration = RKConfiguration()
-        //
+        
         requestQueue = RKRequestQueue(configuration: configuration)
         requestQueue.delegate = self
     }
     
     func startRequest(_ request: RKRequestable) {
-        //
         // 此处可做逻辑判断
-        requestQueue.startRequest(request)
+        requestQueue.enqueue(request)
     }
     
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable) {

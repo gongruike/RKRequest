@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Ruike Gong
+// Copyright (c) 2016 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
 import Alamofire
 
 /*
-    ResponseType is the data type from server, like JSON, XML
-    ResultType is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
+    Type is the data type from server, like JSON, XML
+    Value is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
 */
-open class RKRequest<ResponseType, ResultType>: RKRequestable {
+open class RKRequest<Type, Vaule>: RKRequestable {
 
-    public typealias RKCompletionHandler = (Result<ResultType>) -> Void
+    public typealias RKCompletionHandler = (Result<Vaule>) -> Void
     
     open var url: URLConvertible
     
@@ -42,9 +42,9 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
     
     open var request: Request?
     
-    open var response: DataResponse<ResponseType>?
+    open var response: DataResponse<Type>?
 
-    open var requestQueue: RKRequestQueueType?
+    weak open var requestQueue: RKRequestQueueType?
 
     open var completionHandler: RKCompletionHandler?
 
@@ -53,10 +53,10 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         self.completionHandler = completionHandler
     }
     
-    open func serializeRequest(in requestQueue: RKRequestQueueType) {
-        self.requestQueue = requestQueue
+    open func serialize(in arequestQueue: RKRequestQueueType) {
+        requestQueue = arequestQueue
         
-        self.request = requestQueue.sessionManager.request(
+        request = arequestQueue.sessionManager.request(
             url,
             method: method,
             parameters: parameters,
@@ -81,16 +81,17 @@ open class RKRequest<ResponseType, ResultType>: RKRequestable {
         // Vary on different ResponseType
     }
     
-    open func parseResponse(_ unserializedResponse: DataResponse<ResponseType>) -> Result<ResultType> {
+    open func parseResponse(_ unserializedResponse: DataResponse<Type>) -> Result<Vaule> {
         return Result.failure(RKError.invalidRequestType)
     }
     
-    open func deliverResult() {
+    open func deliverResult(_ result: Result<Vaule>? = nil) {
         DispatchQueue.global(qos: .default).async {
-            let result = (self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed)
+            
+            let deliveredResult = result ?? ((self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed))
             
             DispatchQueue.main.async {
-                self.completionHandler?(result)
+                self.completionHandler?(deliveredResult)
             }
             
             self.requestQueue?.onRequestFinished(self)

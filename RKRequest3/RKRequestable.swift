@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Ruike Gong
+// Copyright (c) 2016 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 import Alamofire
 
-public protocol RKRequestable {
+public protocol RKRequestable: class {
     
     var url: URLConvertible { get }
     
@@ -36,27 +36,31 @@ public protocol RKRequestable {
     
     var request: Request? { get }
     
-    var requestQueue: RKRequestQueueType? { get }
+    weak var requestQueue: RKRequestQueueType? { get }
     
-    func serializeRequest(in requestQueue: RKRequestQueueType)
-    
-    func setDataParseHandler()
+    func serialize(in requestQueue: RKRequestQueueType)
     
     func start()
     
     func cancel()
 }
 
-public protocol RKRequestQueueType {
+public protocol RKRequestQueueType: class {
     //
     var sessionManager: SessionManager { get }
+    
+    weak var delegate: RKRequestQueueDelegate? { get set }
+    
+    func enqueue(_ request: RKRequestable)
+    
+    func dequeue() -> RKRequestable?
     
     func onRequestStarted(_ request: RKRequestable)
     
     func onRequestFinished(_ request: RKRequestable)
 }
 
-public protocol RKRequestQueueDelegate {
+public protocol RKRequestQueueDelegate: class {
     //
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable)
     

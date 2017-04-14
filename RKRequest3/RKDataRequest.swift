@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Ruike Gong
+// Copyright (c) 2016 Ruike Gong
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 import Alamofire
 
-open class RKDataRequest<ResponseType, ResultType>: RKRequest<ResponseType, ResultType> {
+open class RKDataRequest<Type, Vaule>: RKRequest<Type, Vaule> {
     //
     open var dataRequest: DataRequest? { return request as? DataRequest }
 }

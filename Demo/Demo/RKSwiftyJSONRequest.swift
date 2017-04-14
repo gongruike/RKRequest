@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 import AlamofireSwiftyJSON
 
-class RKSwiftyJSONRequest<ResultType>: RKDataRequest<SwiftyJSON.JSON, ResultType> {
+class RKSwiftyJSONRequest<Value>: RKDataRequest<SwiftyJSON.JSON, Value> {
 
     override func setDataParseHandler() {
         //

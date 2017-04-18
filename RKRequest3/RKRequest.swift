@@ -24,7 +24,7 @@ import Alamofire
 
 /*
     Type is the data type from server, like JSON, XML
-    Value is the type that user-defined model of developer, like "User model", "Feed list", "Node info"
+    Value is the type that user-defined model, like "User model", "Feed list", "Node info"
 */
 open class RKRequest<Type, Vaule>: RKRequestable {
 
@@ -75,6 +75,8 @@ open class RKRequest<Type, Vaule>: RKRequestable {
     
     open func cancel() {
         request?.cancel()
+        
+        deliverResult(Result.failure(RKError.requestCanceled))
     }
     
     open func setDataParseHandler() {
@@ -88,10 +90,10 @@ open class RKRequest<Type, Vaule>: RKRequestable {
     open func deliverResult(_ result: Result<Vaule>? = nil) {
         DispatchQueue.global(qos: .default).async {
             
-            let deliveredResult = result ?? ((self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed))
+            let finalResult = result ?? ((self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed))
             
             DispatchQueue.main.async {
-                self.completionHandler?(deliveredResult)
+                self.completionHandler?(finalResult)
             }
             
             self.requestQueue?.onRequestFinished(self)

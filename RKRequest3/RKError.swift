@@ -27,6 +27,7 @@ public enum RKError: Error {
     
     case invalidRequestType
     case requestGenerationFailed
+    case requestCanceled
     case messageError(String)
 }
 
@@ -38,6 +39,8 @@ extension RKError: LocalizedError {
             return "Invalid request type"
         case .requestGenerationFailed:
             return "Fail to generate request"
+        case .requestCanceled:
+            return "Request has been canceled"
         case .messageError(let messge):
             return messge
         }

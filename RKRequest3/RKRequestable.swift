@@ -24,19 +24,17 @@ import Alamofire
 
 public protocol RKRequestable: class {
     
-    var url: URLConvertible { get }
+    var url: URLConvertible { get set }
     
-    var method: HTTPMethod { get }
+    var method: HTTPMethod { get set }
     
-    var parameters: Parameters { get }
+    var parameters: Parameters { get set }
     
-    var encoding: ParameterEncoding { get }
+    var encoding: ParameterEncoding { get set }
     
-    var headers: HTTPHeaders { get }
+    var headers: HTTPHeaders { get set }
     
     var request: Request? { get }
-    
-    weak var requestQueue: RKRequestQueueType? { get }
     
     func serialize(in requestQueue: RKRequestQueueType)
     

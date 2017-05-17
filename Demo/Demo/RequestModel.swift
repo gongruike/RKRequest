@@ -23,6 +23,44 @@ class User {
     
 }
 
+struct MyError: Error {
+    
+    enum InsideErrorType {
+        case one(String)
+        case two(Int)
+        case three(Array<String>)
+        case four(Dictionary<String, String>)
+    }
+    
+    let type: InsideErrorType
+    
+    let code: Int
+    
+    func getErrorInfo() -> String {
+        switch self.type {
+        case .one(let str):
+            return str
+        case .two(let number):
+            return "\(number)"
+        default:
+            return "unknown error"
+        }
+    }
+    
+}
+
+extension Error {
+    
+    func getErrorInfo() -> String {
+        if let err = self as? MyError {
+            return err.getErrorInfo()
+        } else {
+            return localizedDescription
+        }
+    }
+    
+}
+
 class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     
     override func serialize(in requestQueue: RKRequestQueueType) {

@@ -21,7 +21,7 @@ class ViewController: UIViewController {
             case .success(let user):
                 print(user)
             case .failure(let error):
-                print(error)
+                print(error.getErrorInfo())
             }
         }
         HTTPClient.shared.startRequest(request)

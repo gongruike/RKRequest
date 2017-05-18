@@ -23,12 +23,12 @@
 import Alamofire
 
 /*
-    Type is the data type from server, like JSON, XML
+    Type is the data type from server, like JSON, XML, String, Data,
     Value is the type that user-defined model, like "User model", "Feed list", "Node info"
 */
-open class RKRequest<Type, Vaule>: RKRequestable {
+open class RKRequest<Type, Value>: RKRequestable {
 
-    public typealias RKCompletionHandler = (Result<Vaule>) -> Void
+    public typealias RKCompletionHandler = (Result<Value>) -> Void
     
     open var url: URLConvertible
     
@@ -80,14 +80,14 @@ open class RKRequest<Type, Vaule>: RKRequestable {
     }
     
     open func setDataParseHandler() {
-        // Vary on different ResponseType
+        // Different Type
     }
     
-    open func parseResponse(_ unserializedResponse: DataResponse<Type>) -> Result<Vaule> {
+    open func parseResponse(_ dataResponse: DataResponse<Type>) -> Result<Value> {
         return Result.failure(RKError.invalidRequestType)
     }
     
-    open func deliverResult(_ result: Result<Vaule>? = nil) {
+    open func deliverResult(_ result: Result<Value>? = nil) {
         DispatchQueue.global(qos: .default).async {
             
             let finalResult = result ?? ((self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed))

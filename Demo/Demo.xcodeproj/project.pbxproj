@@ -21,6 +21,7 @@
 		9F5861AE1D93B38A00351795 /* RKRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861A61D93B38A00351795 /* RKRequest.swift */; };
 		9F5861AF1D93B38A00351795 /* RKRequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861A71D93B38A00351795 /* RKRequestQueue.swift */; };
 		9F5861B01D93B38A00351795 /* RKTypeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5861A81D93B38A00351795 /* RKTypeRequest.swift */; };
+		9F782DF51ECD6B300052F8B4 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F782DF41ECD6B300052F8B4 /* AppState.swift */; };
 		9FD251AF1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */; };
 		9FD251B11E66716E00DBCDE7 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251B01E66716E00DBCDE7 /* RequestModel.swift */; };
 		9FD251B31E66747800DBCDE7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD251B21E66747800DBCDE7 /* HTTPClient.swift */; };
@@ -200,6 +201,7 @@
 		9F5861A61D93B38A00351795 /* RKRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKRequest.swift; sourceTree = "<group>"; };
 		9F5861A71D93B38A00351795 /* RKRequestQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKRequestQueue.swift; sourceTree = "<group>"; };
 		9F5861A81D93B38A00351795 /* RKTypeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKTypeRequest.swift; sourceTree = "<group>"; };
+		9F782DF41ECD6B300052F8B4 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKSwiftyJSONRequest.swift; sourceTree = "<group>"; };
 		9FD251B01E66716E00DBCDE7 /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		9FD251B21E66747800DBCDE7 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				9FD251AE1E6670F000DBCDE7 /* RKSwiftyJSONRequest.swift */,
 				9FD251B01E66716E00DBCDE7 /* RequestModel.swift */,
 				9FD251B21E66747800DBCDE7 /* HTTPClient.swift */,
+				9F782DF41ECD6B300052F8B4 /* AppState.swift */,
 				9F5861771D93B36C00351795 /* Main.storyboard */,
 				9F58617A1D93B36C00351795 /* Assets.xcassets */,
 				9F58617C1D93B36C00351795 /* LaunchScreen.storyboard */,
@@ -616,6 +619,7 @@
 				9F5861B01D93B38A00351795 /* RKTypeRequest.swift in Sources */,
 				9F5861741D93B36C00351795 /* AppDelegate.swift in Sources */,
 				9F55687A1E5EDA11002F9ECF /* RKRequestable.swift in Sources */,
+				9F782DF51ECD6B300052F8B4 /* AppState.swift in Sources */,
 				9F5861AD1D93B38A00351795 /* RKError.swift in Sources */,
 				9FD251B11E66716E00DBCDE7 /* RequestModel.swift in Sources */,
 			);

@@ -24,9 +24,9 @@
 import Alamofire
 
 /*
-    Take advantages of Alamofire
+    Take advantage of Alamofire
  */
-open class RKStringTypeRequest<Vaule>: RKDataRequest<String, Vaule> {
+open class RKStringTypeRequest<Value>: RKDataRequest<String, Value> {
     
     open override func setDataParseHandler() {
         dataRequest?.responseString(completionHandler: { stringResponse -> Void in
@@ -37,18 +37,7 @@ open class RKStringTypeRequest<Vaule>: RKDataRequest<String, Vaule> {
     
 }
 
-open class RKJSONTypeRequest<Vaule>: RKDataRequest<Any, Vaule> {
-    
-    open override func setDataParseHandler() {
-        dataRequest?.responseJSON(completionHandler: { jsonResponse -> Void in
-            self.response = jsonResponse
-            self.deliverResult()
-        })
-    }
-    
-}
-
-open class RKDataTypeRequest<Vaule>: RKDataRequest<Data, Vaule> {
+open class RKDataTypeRequest<Value>: RKDataRequest<Data, Value> {
     
     open override func setDataParseHandler() {
         dataRequest?.responseData(completionHandler: { dataResponse -> Void in
@@ -59,4 +48,13 @@ open class RKDataTypeRequest<Vaule>: RKDataRequest<Data, Vaule> {
     
 }
 
-
+open class RKJSONTypeRequest<Value>: RKDataRequest<Any, Value> {
+    
+    open override func setDataParseHandler() {
+        dataRequest?.responseJSON(completionHandler: { jsonResponse -> Void in
+            self.response = jsonResponse
+            self.deliverResult()
+        })
+    }
+    
+}

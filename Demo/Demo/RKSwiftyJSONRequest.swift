@@ -14,8 +14,11 @@ class RKSwiftyJSONRequest<Value>: RKDataRequest<SwiftyJSON.JSON, Value> {
 
     override func setDataParseHandler() {
         //
-        dataRequest?.responseSwiftyJSON(completionHandler: { dateResponse in
-            self.response = dateResponse
+        dataRequest?.responseSwiftyJSON(completionHandler: { dataResponse in
+            
+            print(dataResponse.debugDescription)
+            
+            self.response = dataResponse
             self.deliverResult()
         })
     }

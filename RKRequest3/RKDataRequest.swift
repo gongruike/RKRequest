@@ -22,7 +22,7 @@
 
 import Alamofire
 
-open class RKDataRequest<Type, Vaule>: RKRequest<Type, Vaule> {
+open class RKDataRequest<Type, Value>: RKRequest<Type, Value> {
     //
     open var dataRequest: DataRequest? { return request as? DataRequest }
 }

@@ -11,36 +11,36 @@ import SwiftyJSON
 
 class User {
     
-    let id: String
+    let uid: String
     
-    let name: String
+    let username: String
     
-    init(attributes: SwiftyJSON.JSON) {
+    init(attributes: JSON) {
         //
-        id = attributes["id"].stringValue
-        name = attributes["name"].stringValue
+        uid = attributes["uid"].stringValue
+        username = attributes["username"].stringValue
     }
     
 }
 
 struct MyError: Error {
     
-    enum InsideErrorType {
-        case one(String)
-        case two(Int)
-        case three(Array<String>)
-        case four(Dictionary<String, String>)
+    // 与服务器协商的错误信息
+    enum ErrorType {
+        case stringInfo(String)
+        case numberInfo(Int)
+        case arrayInfo(Array<String>)
     }
     
-    let type: InsideErrorType
+    let type: ErrorType
     
-    let code: Int
+    // 可以添加别的信息
     
     func getErrorInfo() -> String {
         switch self.type {
-        case .one(let str):
+        case .stringInfo(let str):
             return str
-        case .two(let number):
+        case .numberInfo(let number):
             return "\(number)"
         default:
             return "unknown error"
@@ -63,25 +63,32 @@ extension Error {
 
 class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     
-    override func serialize(in requestQueue: RKRequestQueueType) {
-        //
-        self.requestQueue = requestQueue
+    override func parseResponse(_ dataResponse: DataResponse<JSON>) -> Result<Value> {
         
-        do {
-            let aURL = try url.asURL()
-            url = URL(string: aURL.absoluteString, relativeTo: URL(string: "http://www.baidu.com"))!
-            
-            self.request = self.requestQueue?.sessionManager.request(
-                url,
-                method: method,
-                parameters: parameters,
-                encoding: encoding,
-                headers: headers
-            )
-        } catch {
-            //
-            self.deliverResult(Result.failure(error))
+        switch dataResponse.result {
+        case .success(let data):
+            return checkResponseError(dataResponse) ?? getExpectedResult(data)
+        case .failure(let error):
+            return Result.failure(error)
         }
+    }
+    
+    // 根据与服务器协定的错误处理方式进行检查
+    func checkResponseError(_ dataResponse: DataResponse<JSON>) -> Result<Value>? {
+        
+        let statusCode = dataResponse.response?.statusCode
+        if statusCode == 400 {
+            return Result.failure(MyError(type: .stringInfo("error")))
+        } else if statusCode == 401 {
+            return Result.failure(MyError(type: .numberInfo(12345)))
+        } else {
+            return nil
+        }
+    }
+    
+    // 获取期望的数据
+    func getExpectedResult(_ data: JSON) -> Result<Value> {
+        return Result.failure(RKError.invalidRequestType)
     }
     
 }
@@ -89,17 +96,11 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
 class UserInfoRequest: BaseRequest<User> {
     
     init(userID: String, completionHandler: RKCompletionHandler?) {
-        super.init(url: "/user/\(userID)", completionHandler: completionHandler)
+        super.init(url: "user/\(userID)", completionHandler: completionHandler)
     }
     
-    override func parseResponse(_ unserializedResponse: DataResponse<JSON>) -> Result<User> {
-        //
-        switch unserializedResponse.result {
-        case .success(let value):
-            return Result.success(User(attributes: value))
-        case .failure(let error):
-            return Result.failure(error)
-        }
+    override func getExpectedResult(_ data: JSON) -> Result<User> {
+        return Result.success(User(attributes: data))
     }
     
 }
@@ -107,35 +108,11 @@ class UserInfoRequest: BaseRequest<User> {
 class UserListRequest: BaseRequest<[User]> {
     
     init(completionHandler: RKCompletionHandler?) {
-        //
-        super.init(url: "/users", completionHandler: completionHandler)
+        super.init(url: "user", completionHandler: completionHandler)
     }
     
-    override func parseResponse(_ unserializedResponse: DataResponse<JSON>) -> Result<Array<User>> {
-        //
-        switch unserializedResponse.result {
-        case .success(let value):
-            return Result.success( value.map { User(attributes: $1) })
-        case .failure(let error):
-            return Result.failure(error)
-        }
+    override func getExpectedResult(_ data: JSON) -> Result<Array<User>> {
+        return Result.success(data.map { User(attributes: $1) })
     }
     
 }
-
-class BaseListRequest<ResultType>: RKSwiftyJSONRequest<ResultType> {
-    
-    let pageNumber: Int
-    
-    let pageSize: Int
-    
-    init(pageNumber: Int, pageSize: Int, url: URLConvertible, completionHandler: RKCompletionHandler?) {
-        self.pageNumber = pageNumber
-        self.pageSize = pageSize
-        //
-        super.init(url: url, completionHandler: completionHandler)
-    }
-    
-}
-
-

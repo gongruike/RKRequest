@@ -44,7 +44,7 @@ public protocol RKRequestable: class {
 }
 
 public protocol RKRequestQueueType: class {
-    //
+    
     var sessionManager: SessionManager { get }
     
     weak var delegate: RKRequestQueueDelegate? { get set }
@@ -59,7 +59,7 @@ public protocol RKRequestQueueType: class {
 }
 
 public protocol RKRequestQueueDelegate: class {
-    //
+    
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable)
     
     func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable)

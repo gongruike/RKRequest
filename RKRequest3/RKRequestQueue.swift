@@ -35,7 +35,7 @@ open class RKRequestQueue: RKRequestQueueType {
     
     open var queuedRequests: [RKRequestable] = []
     
-    let synchronizationQueue = DispatchQueue(label: "cn.rk.request.synchronization.queue." + UUID().uuidString)
+    let synchronizationQueue = DispatchQueue(label: "cn.rk.request.queue.synchronization.queue." + UUID().uuidString)
     
     public init(configuration: RKConfiguration) {
         self.configuration = configuration
@@ -99,7 +99,11 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func onRequestStarted(_ request: RKRequestable) {
-        activeRequestCount += 1
+        synchronizationQueue.async { [weak self] in
+            guard let strongSelf = self else { return }
+
+            strongSelf.activeRequestCount += 1
+        }
         
         DispatchQueue.main.async {
             self.delegate?.requestQueue(self, didStart: request)

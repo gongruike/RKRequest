@@ -24,7 +24,6 @@ class User {
 }
 
 struct MyError: Error {
-    
     // 与服务器协商的错误信息
     enum ErrorType {
         case stringInfo(String)
@@ -72,6 +71,10 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
             return Result.failure(error)
         }
     }
+    
+    /*
+     我一直犹豫是否要把checkResponseError和getExpectedResult放到RKRequest中
+     */
     
     // 根据与服务器协定的错误处理方式进行检查
     func checkResponseError(_ dataResponse: DataResponse<JSON>) -> Result<Value>? {

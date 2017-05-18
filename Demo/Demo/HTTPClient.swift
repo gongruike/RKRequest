@@ -35,8 +35,8 @@ class HTTPClient: RKRequestQueueDelegate {
             // Handle error
             print(error)
         }
+
         requestQueue.enqueue(request)
-        
     }
     
     func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable) {

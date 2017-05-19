@@ -72,7 +72,7 @@ open class RKRequestQueue: RKRequestQueueType {
 
     private func start(_ request: RKRequestable) {
         //
-        request.serialize(in: self)
+        request.prepare(in: self)
         request.start()
     }
     

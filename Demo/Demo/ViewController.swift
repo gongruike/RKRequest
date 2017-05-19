@@ -5,9 +5,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getUserList()
-        
+    }
+    
+    @IBAction func onUserBtnClicked(_ sender: Any) {
         getUserInfo(userID: "354287")
+    }
+    
+    @IBAction func onUserListBtnClicked(_ sender: Any) {
+        getUserList()
     }
     
     // 根据userID获取用户信息

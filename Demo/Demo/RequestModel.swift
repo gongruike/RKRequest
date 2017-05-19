@@ -73,12 +73,12 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     }
     
     /*
-     我一直犹豫是否要把checkResponseError和getExpectedResult放到RKRequest中
+        我一直犹豫是否要把checkResponseError和getExpectedResult放到RKRequest中
      */
     
     // 根据与服务器协定的错误处理方式进行检查
     func checkResponseError(_ dataResponse: DataResponse<JSON>) -> Result<Value>? {
-        
+
         let statusCode = dataResponse.response?.statusCode
         if statusCode == 400 {
             return Result.failure(MyError(type: .stringInfo("error")))

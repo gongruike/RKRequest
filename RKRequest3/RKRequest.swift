@@ -53,10 +53,10 @@ open class RKRequest<Type, Value>: RKRequestable {
         self.completionHandler = completionHandler
     }
     
-    open func serialize(in arequestQueue: RKRequestQueueType) {
-        requestQueue = arequestQueue
+    open func prepare(in aRequestQueue: RKRequestQueueType) {
+        requestQueue = aRequestQueue
         
-        request = arequestQueue.sessionManager.request(
+        request = aRequestQueue.sessionManager.request(
             url,
             method: method,
             parameters: parameters,

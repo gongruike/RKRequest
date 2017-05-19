@@ -36,7 +36,7 @@ public protocol RKRequestable: class {
     
     var request: Request? { get }
     
-    func serialize(in requestQueue: RKRequestQueueType)
+    func prepare(in requestQueue: RKRequestQueueType)
     
     func start()
     

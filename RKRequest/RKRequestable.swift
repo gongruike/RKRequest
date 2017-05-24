@@ -24,7 +24,7 @@ import Alamofire
 
 public protocol RKRequestable: class {
     
-    var url: URLConvertible { get set }
+    var url: String { get set }
     
     var method: HTTPMethod { get set }
     

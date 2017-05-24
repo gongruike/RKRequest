@@ -30,7 +30,7 @@ open class RKRequest<Type, Value>: RKRequestable {
 
     public typealias RKCompletionHandler = (Result<Value>) -> Void
     
-    open var url: URLConvertible
+    open var url: String
     
     open var method: HTTPMethod = .get
     
@@ -44,11 +44,12 @@ open class RKRequest<Type, Value>: RKRequestable {
     
     open var response: DataResponse<Type>?
 
-    weak open var requestQueue: RKRequestQueueType?
+    open var requestQueue: RKRequestQueueType?
 
     open var completionHandler: RKCompletionHandler?
 
-    public init(url: URLConvertible, completionHandler: RKCompletionHandler?) {
+    public init(url: String, completionHandler: RKCompletionHandler?) {
+        
         self.url = url
         self.completionHandler = completionHandler
     }

@@ -49,7 +49,7 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func enqueue(_ request: RKRequestable) {
-        //
+        
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -62,7 +62,7 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func dequeue() -> RKRequestable? {
-        //
+        
         var request: RKRequestable?
         if !queuedRequests.isEmpty {
             request = queuedRequests.removeFirst()
@@ -71,13 +71,13 @@ open class RKRequestQueue: RKRequestQueueType {
     }
 
     private func start(_ request: RKRequestable) {
-        //
+        
         request.prepare(in: self)
         request.start()
     }
     
     private func startNextRequest() {
-        //
+        
         guard isActiveRequestCountBelowMaximumLimit() else { return }
         guard let request = dequeue() else { return }
         
@@ -85,7 +85,7 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     private func enqueueRequest(_ request: RKRequestable) {
-        //
+        
         switch configuration.prioritization {
         case .fifo:
             queuedRequests.append(request)
@@ -99,6 +99,7 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func onRequestStarted(_ request: RKRequestable) {
+        
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
 
@@ -111,6 +112,7 @@ open class RKRequestQueue: RKRequestQueueType {
     }
     
     open func onRequestFinished(_ request: RKRequestable) {
+        
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             

@@ -26,16 +26,9 @@ class HTTPClient: RKRequestQueueDelegate {
         // 添加Authentication Header等
 
         request.headers["Authentication"] = "Bearer 1234567890kjhgf"
-        
-        do {
-            let url = try request.url.asURL()
-            request.url = URL(string: url.absoluteString, relativeTo: URL(string: "http://localhost:3000/v1/"))!
-            
-        } catch {
-            // Handle error
-            print(error)
-        }
 
+        request.url = "http://localhost:3000/v1/" + request.url
+        
         requestQueue.enqueue(request)
     }
     

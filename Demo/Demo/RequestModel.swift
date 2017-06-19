@@ -74,6 +74,11 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     
     /*
         我一直犹豫是否要把checkResponseError和getExpectedResult放到RKRequest中
+     
+        现在流行的restful api接口有两种类型，
+        1、以http status code为准，只有200系列是成功的，其他401，400，500类型的都是错误
+        2、只要服务器有返回都是200，具体的错误code和信息都在返回的响应里
+     
      */
     
     // 根据与服务器协定的错误处理方式进行检查

@@ -34,6 +34,8 @@ public protocol RKRequestable: class {
     
     var headers: HTTPHeaders { get set }
     
+    var timeoutInterval: TimeInterval { get set }
+    
     var request: Request? { get }
     
     func prepare(in requestQueue: RKRequestQueueType)

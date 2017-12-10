@@ -62,7 +62,7 @@ extension Error {
 
 class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     
-    override func parseResponse(_ dataResponse: DataResponse<JSON>) -> Result<Value> {
+    override func parse(_ dataResponse: DataResponse<JSON>) -> Result<Value> {
         
         switch dataResponse.result {
         case .success(let data):

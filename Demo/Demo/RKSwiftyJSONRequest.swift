@@ -12,14 +12,13 @@ import AlamofireSwiftyJSON
 
 class RKSwiftyJSONRequest<Value>: RKDataRequest<SwiftyJSON.JSON, Value> {
 
-    override func setDataParseHandler() {
+    override func setResponseHandler() {
         //
         dataRequest?.responseSwiftyJSON(completionHandler: { dataResponse in
             
             print(dataResponse.debugDescription)
-            
-            self.response = dataResponse
-            self.deliverResult()
+            //
+            self.deliver(dataResponse);
         })
     }
     

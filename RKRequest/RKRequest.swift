@@ -40,6 +40,8 @@ open class RKRequest<Type, Value>: RKRequestable {
     
     open var headers: HTTPHeaders = [:]
     
+    open var timeoutInterval: TimeInterval = 10;
+    
     open var request: Request?
     
     open var response: DataResponse<Type>?
@@ -49,25 +51,30 @@ open class RKRequest<Type, Value>: RKRequestable {
     open var completionHandler: RKCompletionHandler?
 
     public init(url: String, completionHandler: RKCompletionHandler?) {
-        
         self.url = url
         self.completionHandler = completionHandler
     }
     
     open func prepare(in aRequestQueue: RKRequestQueueType) {
         requestQueue = aRequestQueue
-        
-        request = aRequestQueue.sessionManager.request(
-            url,
-            method: method,
-            parameters: parameters,
-            encoding: encoding,
-            headers: headers
-        )
+        do {
+            let originalRequest = try URLRequest(url: url, method: method, headers: headers)
+            var encodedURLRequest = try encoding.encode(originalRequest, with: parameters)
+            encodedURLRequest.timeoutInterval = timeoutInterval
+            request = aRequestQueue.sessionManager.request(encodedURLRequest);
+        } catch {
+            request = aRequestQueue.sessionManager.request(
+                url,
+                method: method,
+                parameters: parameters,
+                encoding: encoding,
+                headers: headers
+            )
+        }
     }
     
     open func start() {
-        setDataParseHandler()
+        setResponseHandler()
         
         request?.resume()
         
@@ -76,25 +83,26 @@ open class RKRequest<Type, Value>: RKRequestable {
     
     open func cancel() {
         request?.cancel()
-        
-        deliverResult(Result.failure(RKError.requestCanceled))
     }
     
-    open func setDataParseHandler() {
+    open func setResponseHandler() {
         // Different Type
     }
     
-    open func parseResponse(_ dataResponse: DataResponse<Type>) -> Result<Value> {
+    open func parse(_ dataResponse: DataResponse<Type>) -> Result<Value> {
         return Result.failure(RKError.invalidRequestType)
     }
     
-    open func deliverResult(_ result: Result<Value>? = nil) {
+    open func deliver(_ dataResponse: DataResponse<Type>) {
+        //
+        self.response = dataResponse;
+        //
         DispatchQueue.global(qos: .default).async {
             
-            let finalResult = result ?? ((self.response != nil) ? self.parseResponse(self.response!) : Result.failure(RKError.requestGenerationFailed))
+            let result = self.parse(dataResponse);
             
             DispatchQueue.main.async {
-                self.completionHandler?(finalResult)
+                self.completionHandler?(result)
             }
             
             self.requestQueue?.onRequestFinished(self)

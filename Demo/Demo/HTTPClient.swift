@@ -8,31 +8,33 @@
 
 import UIKit
 
-class HTTPClient: RKRequestQueueDelegate {
+class HTTPClient: RequestQueueDelegate {
 
     static let shared = HTTPClient()
     
-    private let requestQueue: RKRequestQueueType
+    private let requestQueue: RequestQueueType
 
     init() {
-        let configuration = RKConfiguration()
+        let configuration = Configuration()
         
-        requestQueue = RKRequestQueue(configuration: configuration)
+        requestQueue = RequestQueue(configuration: configuration)
         requestQueue.delegate = self
     }
     
-    func startRequest(_ request: RKRequestable) {
-        
-        request.url = "http://localhost:3000/v1/" + request.url
-        
+    func startRequest(_ request: Requestable) {
+        do {
+            _ = try request.url.asURL()
+        } catch {
+            request.url = "http://localhost:3000/v1/" + ""
+        }
         requestQueue.enqueue(request)
     }
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable) {
+    func requestQueue(_ requestQueue: RequestQueue, didStart request: Requestable) {
         
     }
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable) {
+    func requestQueue(_ requestQueue: RequestQueue, didFinish request: Requestable) {
         
     }
     

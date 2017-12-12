@@ -26,44 +26,44 @@ import Alamofire
     Type is the data type from server, like JSON, XML, String, Data,
     Value is the type that user-defined model, like "User model", "Feed list", "Node info"
 */
-open class RKRequest<Type, Value>: RKRequestable {
+open class Request<Type, Value>: Requestable {
 
-    public typealias RKCompletionHandler = (Result<Value>) -> Void
+    public typealias CompletionHandler = (Result<Value>) -> Void
     
-    open var url: String
+    open var url: Alamofire.URLConvertible
     
-    open var method: HTTPMethod = .get
+    open var method: Alamofire.HTTPMethod = .get
     
-    open var parameters: Parameters = [:]
+    open var parameters: Alamofire.Parameters = [:]
     
-    open var encoding: ParameterEncoding = URLEncoding.default
+    open var encoding: Alamofire.ParameterEncoding = URLEncoding.default
     
-    open var headers: HTTPHeaders = [:]
+    open var headers: Alamofire.HTTPHeaders = [:]
     
     open var timeoutInterval: TimeInterval = 10;
     
-    open var request: Request?
+    open var aRequest: Alamofire.Request?
     
-    open var response: DataResponse<Type>?
+    open var response: Alamofire.DataResponse<Type>?
 
-    open var requestQueue: RKRequestQueueType?
+    open var requestQueue: RequestQueueType?
 
-    open var completionHandler: RKCompletionHandler?
+    open var completionHandler: CompletionHandler?
 
-    public init(url: String, completionHandler: RKCompletionHandler?) {
+    public init(url: String, completionHandler: CompletionHandler?) {
         self.url = url
         self.completionHandler = completionHandler
     }
     
-    open func prepare(in aRequestQueue: RKRequestQueueType) {
+    open func prepare(in aRequestQueue: RequestQueueType) {
         requestQueue = aRequestQueue
         do {
             let originalRequest = try URLRequest(url: url, method: method, headers: headers)
             var encodedURLRequest = try encoding.encode(originalRequest, with: parameters)
             encodedURLRequest.timeoutInterval = timeoutInterval
-            request = aRequestQueue.sessionManager.request(encodedURLRequest);
+            aRequest = aRequestQueue.sessionManager.request(encodedURLRequest);
         } catch {
-            request = aRequestQueue.sessionManager.request(
+            aRequest = aRequestQueue.sessionManager.request(
                 url,
                 method: method,
                 parameters: parameters,
@@ -76,13 +76,13 @@ open class RKRequest<Type, Value>: RKRequestable {
     open func start() {
         setResponseHandler()
         
-        request?.resume()
+        aRequest?.resume()
         
         requestQueue?.onRequestStarted(self)
     }
     
     open func cancel() {
-        request?.cancel()
+        aRequest?.cancel()
     }
     
     open func setResponseHandler() {

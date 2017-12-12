@@ -23,21 +23,21 @@
 
 import Alamofire
 
-open class RKRequestQueue: RKRequestQueueType {
+open class RequestQueue: RequestQueueType {
     
     open let sessionManager: SessionManager
     
-    open let configuration: RKConfiguration
+    open let configuration: Configuration
     
-    weak open var delegate: RKRequestQueueDelegate?
+    weak open var delegate: RequestQueueDelegate?
 
     open var activeRequestCount: Int = 0
     
-    open var queuedRequests: [RKRequestable] = []
+    open var queuedRequests: [Requestable] = []
     
     let synchronizationQueue = DispatchQueue(label: "cn.rk.request.queue.synchronization.queue." + UUID().uuidString)
     
-    public init(configuration: RKConfiguration) {
+    public init(configuration: Configuration) {
         self.configuration = configuration
         self.sessionManager = SessionManager(
             configuration: configuration.configuration,
@@ -48,7 +48,7 @@ open class RKRequestQueue: RKRequestQueueType {
         self.sessionManager.startRequestsImmediately = false
     }
     
-    open func enqueue(_ request: RKRequestable) {
+    open func enqueue(_ request: Requestable) {
         
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -61,16 +61,16 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    open func dequeue() -> RKRequestable? {
+    open func dequeue() -> Requestable? {
         
-        var request: RKRequestable?
+        var request: Requestable?
         if !queuedRequests.isEmpty {
             request = queuedRequests.removeFirst()
         }
         return request
     }
 
-    private func start(_ request: RKRequestable) {
+    private func start(_ request: Requestable) {
         
         request.prepare(in: self)
         request.start()
@@ -84,7 +84,7 @@ open class RKRequestQueue: RKRequestQueueType {
         start(request)
     }
     
-    private func enqueueRequest(_ request: RKRequestable) {
+    private func enqueueRequest(_ request: Requestable) {
         
         switch configuration.prioritization {
         case .fifo:
@@ -98,7 +98,7 @@ open class RKRequestQueue: RKRequestQueueType {
         return activeRequestCount < configuration.maximumActiveRequestCount
     }
     
-    open func onRequestStarted(_ request: RKRequestable) {
+    open func onRequestStarted(_ request: Requestable) {
         
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -111,7 +111,7 @@ open class RKRequestQueue: RKRequestQueueType {
         }
     }
     
-    open func onRequestFinished(_ request: RKRequestable) {
+    open func onRequestFinished(_ request: Requestable) {
         
         synchronizationQueue.async { [weak self] in
             guard let strongSelf = self else { return }

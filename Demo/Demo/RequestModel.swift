@@ -73,7 +73,7 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
     }
     
     /*
-        我一直犹豫是否要把checkResponseError和getExpectedResult放到RKRequest中
+        我一直犹豫是否要把checkResponseError和getExpectedResult放到Request中
      
         现在流行的restful api接口有两种类型，
         1、以http status code为准，只有200系列是成功的，其他401，400，500类型的都是错误
@@ -103,7 +103,7 @@ class BaseRequest<Value>: RKSwiftyJSONRequest<Value> {
 
 class UserInfoRequest: BaseRequest<User> {
     
-    init(userID: String, completionHandler: RKCompletionHandler?) {
+    init(userID: String, completionHandler: CompletionHandler?) {
         super.init(url: "user/\(userID)", completionHandler: completionHandler)
     }
     
@@ -115,7 +115,7 @@ class UserInfoRequest: BaseRequest<User> {
 
 class UserListRequest: BaseRequest<[User]> {
     
-    init(completionHandler: RKCompletionHandler?) {
+    init(completionHandler: CompletionHandler?) {
         super.init(url: "user", completionHandler: completionHandler)
     }
     

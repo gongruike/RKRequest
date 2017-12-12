@@ -22,47 +22,47 @@
 
 import Alamofire
 
-public protocol RKRequestable: class {
+public protocol Requestable: class {
     
-    var url: String { get set }
+    var url: Alamofire.URLConvertible { get set }
     
-    var method: HTTPMethod { get set }
+    var method: Alamofire.HTTPMethod { get set }
     
-    var parameters: Parameters { get set }
+    var parameters: Alamofire.Parameters { get set }
     
-    var encoding: ParameterEncoding { get set }
+    var encoding: Alamofire.ParameterEncoding { get set }
     
-    var headers: HTTPHeaders { get set }
+    var headers: Alamofire.HTTPHeaders { get set }
     
     var timeoutInterval: TimeInterval { get set }
     
-    var request: Request? { get }
+    var aRequest: Alamofire.Request? { get }
     
-    func prepare(in requestQueue: RKRequestQueueType)
+    func prepare(in requestQueue: RequestQueueType)
     
     func start()
     
     func cancel()
 }
 
-public protocol RKRequestQueueType: class {
+public protocol RequestQueueType: class {
     
     var sessionManager: SessionManager { get }
     
-    weak var delegate: RKRequestQueueDelegate? { get set }
+    weak var delegate: RequestQueueDelegate? { get set }
     
-    func enqueue(_ request: RKRequestable)
+    func enqueue(_ request: Requestable)
     
-    func dequeue() -> RKRequestable?
+    func dequeue() -> Requestable?
     
-    func onRequestStarted(_ request: RKRequestable)
+    func onRequestStarted(_ request: Requestable)
     
-    func onRequestFinished(_ request: RKRequestable)
+    func onRequestFinished(_ request: Requestable)
 }
 
-public protocol RKRequestQueueDelegate: class {
+public protocol RequestQueueDelegate: class {
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable)
+    func requestQueue(_ requestQueue: RequestQueue, didStart request: Requestable)
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable)
+    func requestQueue(_ requestQueue: RequestQueue, didFinish request: Requestable)
 }

@@ -8,37 +8,38 @@
 
 import UIKit
 
-class BasicAuthClient: RKRequestQueueDelegate {
+class BasicAuthClient: RequestQueueDelegate {
     
     static let shared = HTTPClient()
     
-    private let requestQueue: RKRequestQueueType
+    private let requestQueue: RequestQueueType
     
     init() {
-        let configuration = RKConfiguration()
+        let configuration = Configuration()
         
-        requestQueue = RKRequestQueue(configuration: configuration)
+        requestQueue = RequestQueue(configuration: configuration)
         requestQueue.delegate = self
     }
     
-    func startRequest(_ request: RKRequestable) {
+    func startRequest(_ request: Requestable) {
         // 此处可做逻辑判断
         // 添加Authentication Header等
-        
         request.headers["Authentication"] = "Bearer 1234567890kjhgf"
-        
-        request.url = "http://localhost:3000/v1/" + request.url
-        
+        do {
+            _ = try request.url.asURL()
+        } catch {
+            request.url = "http://localhost:3000/v1/" + ""
+        }
         requestQueue.enqueue(request)
     }
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didStart request: RKRequestable) {
+    func requestQueue(_ requestQueue: RequestQueue, didStart request: Requestable) {
         
     }
     
-    func requestQueue(_ requestQueue: RKRequestQueue, didFinish request: RKRequestable) {
+    func requestQueue(_ requestQueue: RequestQueue, didFinish request: Requestable) {
         
-        if request.request?.response?.statusCode == 401 {
+        if request.aRequest?.response?.statusCode == 401 {
             // 认证失败
             // do something
         }

@@ -22,16 +22,16 @@
 
 import Alamofire
 
-public enum RKPrioritization {
+public enum Prioritization {
     //
     case fifo, lifo
 }
 
-open class RKConfiguration {
+open class Configuration {
     
     open var maximumActiveRequestCount: Int
     
-    open let prioritization: RKPrioritization
+    open let prioritization: Prioritization
     
     open let configuration: URLSessionConfiguration
     
@@ -39,8 +39,8 @@ open class RKConfiguration {
     
     public init(
         maximumActiveRequestCount: Int = 3,
-        prioritization: RKPrioritization = .fifo,
-        configuration: URLSessionConfiguration = RKConfiguration.defaultURLSessionConfiguration(),
+        prioritization: Prioritization = .fifo,
+        configuration: URLSessionConfiguration = Configuration.defaultURLSessionConfiguration(),
         trustPolicyManager: ServerTrustPolicyManager? = nil)
     {
         self.maximumActiveRequestCount  = maximumActiveRequestCount
@@ -61,7 +61,7 @@ open class RKConfiguration {
         configuration.allowsCellularAccess          = true
         configuration.timeoutIntervalForResource    = 10
         
-        configuration.urlCache                      = RKConfiguration.defaultURLCache()
+        configuration.urlCache                      = Configuration.defaultURLCache()
         
         return configuration
     }

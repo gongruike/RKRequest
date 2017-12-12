@@ -20,38 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 import Alamofire
 
-/*
-    Take advantage of Alamofire
- */
-open class RKStringTypeRequest<Value>: RKDataRequest<String, Value> {
-    
-    open override func setResponseHandler() {
-        dataRequest?.responseString(completionHandler: { stringResponse -> Void in
-            self.deliver(stringResponse);
-        })
-    }
-    
-}
-
-open class RKDataTypeRequest<Value>: RKDataRequest<Data, Value> {
-    
-    open override func setResponseHandler() {
-        dataRequest?.responseData(completionHandler: { dataResponse -> Void in
-            self.deliver(dataResponse);
-        })
-    }
-    
-}
-
-open class RKJSONTypeRequest<Value>: RKDataRequest<Any, Value> {
-    
-    open override func setResponseHandler() {
-        dataRequest?.responseJSON(completionHandler: { jsonResponse -> Void in
-            self.deliver(jsonResponse);
-        })
-    }
-    
+open class DataRequest<Type, Value>: Request<Type, Value> {
+    //
+    open var dataRequest: Alamofire.DataRequest? { return aRequest as? Alamofire.DataRequest }
 }
